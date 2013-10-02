@@ -1,0 +1,79 @@
+<!doctype html>
+<html ng-app="stories">
+    <head>
+        <title>angular-taskboard</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="styles/main.css">
+    </head>
+    <body>
+        <h1>angular-taskboard, Version {{0 + 1}}</h1>
+
+        <form name="allStories" ng-controller="StoryController">
+
+            <a href="#/story/add" ng-click="newStory.triggerDialog()">Add new story</a>
+
+            <div class="addStoryContainer" ng-hide="newStory.hidden">
+                <label for="storyName">Name</label>
+                <input id="storyName" type="text" ng-model="newStory.name" />
+
+                <fieldset id=storyPriority">
+                    <legend>Priority</legend>
+                    <input type="radio" name="priority" value="1" ng-model="newStory.priority">1</input>
+                    <input type="radio" name="priority" value="2" ng-model="newStory.priority">2</input>
+                    <input type="radio" name="priority" value="3" ng-model="newStory.priority">3</input>
+                    <input type="radio" name="priority" value="4" ng-model="newStory.priority">4</input>
+                    <input type="radio" name="priority" value="5" ng-model="newStory.priority">5</input>
+                </fieldset>
+
+                <input type="submit" value="Add" ng-click="newStory.add()"/>
+            </div>
+
+            <div class="addTaskContainer" ng-hide="newTask.hidden">
+                <label for="taskStory">Story</label>
+                <input id="taskStory" type="text" ng-model="newTask.story.name" readonly />
+
+                <label for="taskTitle">Title</label>
+                <input id="taskTitle" type="text" ng-model="newTask.title" />
+
+                <label for="taskDescription">Description</label>
+                <input id="taskDescription" type="text" ng-model="newTask.description" />
+
+                <label for="taskEstimate">Estimated time</label>
+                <input id="taskEstimate" type="text" ng-model="newTask.taskEstimate" />
+
+                <input type="submit" value="Add" ng-click="newTask.add()"/>
+            </div>
+
+            <ul class="storyStatus">
+                <li>ToDo</li>
+                <li>Progressing</li>
+                <li>Resolved</li>
+                <li>Done</li>
+            </ul>
+
+            <div class="storyContainer" ng-repeat="story in stories">
+                <h2>This is story {{story.name}}</h2>
+                <a href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">Add new task</a>
+                <a href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">Delete Story</a>
+                <ul class="story" >
+                    <li class="task" ng-repeat="task in story.tasks">
+                        <div class="item">
+                            <input type="text" ng-model="task.title" ng-change="taskUpdated(this)" />
+                            <a href="#/task/{{task.$$hashKey}}/delete" ng-click="deleteTask(task.$$hashKey)">Delete task</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+
+        <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="scripts/controllers.js"></script>
+        <script type="text/javascript" src="scripts/services.js"></script>
+        <script type="text/javascript" src="scripts/routers.js"></script>
+</body>
+</html>

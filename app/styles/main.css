@@ -1,0 +1,44 @@
+body {
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 100%;
+    color: #333;
+}
+
+h2 {
+    margin: 0;
+    font-size: 1em;
+    float: left;
+}
+
+.storyContainer {
+    margin-top: 14px;
+}
+
+ul {
+    clear: both;
+    margin: 0;
+    padding: 0;
+}
+
+ul.storyStatus li {
+    background-color: #C09853;
+    width: 25%;
+    padding: 3px 0px 3px 0px;
+    text-align: center;
+    font-weight: bold;
+    list-style-type: none;
+    float: left;
+}
+
+.story li {
+    width: 25%;
+    list-style-type: none;
+}
+
+.item {
+    width: 100%;
+    border: 1px solid #DFDFDF;
+    margin-top: 2px;
+    padding: 2px;
+}

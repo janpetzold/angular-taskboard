@@ -1,0 +1,1 @@
+This is a little project for me playing around with AngularJS. It is far from being done, once that changes this documentation will be updated.
