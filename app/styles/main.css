@@ -41,4 +41,21 @@ ul.storyStatus li {
     border: 1px solid #DFDFDF;
     margin-top: 2px;
     padding: 2px;
+    cursor : move;
+}
+
+.itemStatus0 {
+    margin-left: 0%;
+}
+
+.itemStatus1 {
+    margin-left: 100%;
+}
+
+.itemStatus2 {
+    margin-left: 200%;
+}
+
+.itemStatus3 {
+    margin-left: 300%;
 }

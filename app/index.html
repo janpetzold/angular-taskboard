@@ -77,24 +77,28 @@
                 <h2>This is story {{story.name}}, priority {{story.priority}}</h2>
                 <a href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">add</a>
                 <a href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">del</a>
-                <ul class="story" >
-                    <li class="task" ng-repeat="task in story.tasks | filter:filterProp">
-                        <div class="item">
-                            <input type="text" ng-model="task.title" ng-change="taskUpdated(this)" />
-                            <a href="#/task/{{task.$$hashKey}}/delete" ng-click="deleteTask(task.$$hashKey)">del</a>
-                            <br />
-                            <span>Assignee: {{task.assignee}}</span>
-                            <br />
-                            <span>Estimated duration: {{task.estimate}}</span>
-                        </div>
-                    </li>
-                </ul>
+                <div class="dropzone">
+                    <ul class="story">
+                        <li class="task" ng-repeat="task in story.tasks | filter:filterProp">
+                            <div class="item itemStatus{{task.status}}" draggable="true">
+                                <input type="text" ng-model="task.title" ng-change="taskUpdated(this)" />
+                                <a href="#/task/{{task.$$hashKey}}/delete" ng-click="deleteTask(task.$$hashKey)">del</a>
+                                <br />
+                                <span>Assignee: {{task.assignee}}</span>
+                                <br />
+                                <span>Estimated duration: {{task.estimate}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </form>
         <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
         <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
         <script type="text/javascript" src="scripts/controllers.js"></script>
         <script type="text/javascript" src="scripts/services.js"></script>
         <script type="text/javascript" src="scripts/routers.js"></script>
+        <script type="text/javascript" src="scripts/listeners.js"></script>
 </body>
 </html>

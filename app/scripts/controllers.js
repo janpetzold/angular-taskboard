@@ -63,7 +63,7 @@ function StoryController($scope, StorageService) {
             var story = createNewStory($scope.newStory);
 
             // Update stories in view and storage
-            $scope.stories.push(story);
+            $scope.stories = addStory($scope.stories, story)
             StorageService.setStories($scope.stories);
 
             // Hide the input dialog
@@ -152,6 +152,15 @@ function createNewStory(story) {
         "time" : story.time
     };
     return story;
+}
+
+function addStory(stories, story) {
+    if(stories && stories.length > 0) {
+        stories.push(story);
+    } else {
+        stories = [story];
+    }
+    return stories;
 }
 
 function createNewTask(task) {
