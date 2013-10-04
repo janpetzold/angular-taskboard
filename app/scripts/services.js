@@ -8,6 +8,12 @@ stories.provider('StorageService', function() {
             },
             setStories : function(data) {
                 window.localStorage.setItem("persistedData", JSON.stringify(data));
+            },
+            getAssignees: function() {
+                return JSON.parse(window.localStorage.getItem("persistedAssignees"));
+            },
+            setAssignees : function(data) {
+                window.localStorage.setItem("persistedAssignees", JSON.stringify(data));
             }
         }
     };

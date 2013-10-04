@@ -14,8 +14,25 @@
         <h1>angular-taskboard, Version {{0 + 1}}</h1>
 
         <form name="allStories" ng-controller="StoryController">
+            <div class="sortingContainer">
+                <span>Sort by:</span>
+                <select ng-Model="orderProp">
+                    <option value="age">Age</option>
+                    <option value="priority">Priority</option>
+                </select>
+            </div>
 
-            <a href="#/story/add" ng-click="newStory.triggerDialog()">Add new story</a>
+            <div class="filterContainer">
+                <span>Filter by assignee:</span>
+                <select ng-Model="filterProp">
+                    <option ng-repeat="assignee in assignees" ng-model="assignee.name" value="{{assignee.name}}">{{assignee.name}}</option>
+                </select>
+                <a href="#/resetFilter" ng-click="resetFilter()">Reset filter</a>
+            </div>
+
+            <br />
+
+            <a href="#/story/add" ng-click="newStory.triggerDialog()">add new story</a>
 
             <div class="addStoryContainer" ng-hide="newStory.hidden">
                 <label for="storyName">Name</label>
@@ -23,11 +40,11 @@
 
                 <fieldset id=storyPriority">
                     <legend>Priority</legend>
-                    <input type="radio" name="priority" value="1" ng-model="newStory.priority">1</input>
+                    <input type="radio" name="priority" value="1" ng-model="newStory.priority">1 (max)</input>
                     <input type="radio" name="priority" value="2" ng-model="newStory.priority">2</input>
                     <input type="radio" name="priority" value="3" ng-model="newStory.priority">3</input>
                     <input type="radio" name="priority" value="4" ng-model="newStory.priority">4</input>
-                    <input type="radio" name="priority" value="5" ng-model="newStory.priority">5</input>
+                    <input type="radio" name="priority" value="5" ng-model="newStory.priority">5 (min)</input>
                 </fieldset>
 
                 <input type="submit" value="Add" ng-click="newStory.add()"/>
@@ -40,38 +57,42 @@
                 <label for="taskTitle">Title</label>
                 <input id="taskTitle" type="text" ng-model="newTask.title" />
 
-                <label for="taskDescription">Description</label>
-                <input id="taskDescription" type="text" ng-model="newTask.description" />
+                <label for="taskAssignee">Assignee</label>
+                <input id="taskAssignee" type="text" ng-model="newTask.assignee" />
 
                 <label for="taskEstimate">Estimated time</label>
-                <input id="taskEstimate" type="text" ng-model="newTask.taskEstimate" />
+                <input id="taskEstimate" type="text" ng-model="newTask.estimate" />
 
                 <input type="submit" value="Add" ng-click="newTask.add()"/>
             </div>
 
             <ul class="storyStatus">
-                <li>ToDo</li>
-                <li>Progressing</li>
-                <li>Resolved</li>
-                <li>Done</li>
+                <li>ToDo ({{tasksUndone}})</li>
+                <li>Progressing ({{tasksProgressing}})</li>
+                <li>Resolved ({{tasksResolved}})</li>
+                <li>Done ({{tasksDone}})</li>
             </ul>
 
-            <div class="storyContainer" ng-repeat="story in stories">
-                <h2>This is story {{story.name}}</h2>
-                <a href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">Add new task</a>
-                <a href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">Delete Story</a>
+            <div class="storyContainer" ng-repeat="story in stories | orderBy:orderProp">
+                <h2>This is story {{story.name}}, priority {{story.priority}}</h2>
+                <a href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">add</a>
+                <a href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">del</a>
                 <ul class="story" >
-                    <li class="task" ng-repeat="task in story.tasks">
+                    <li class="task" ng-repeat="task in story.tasks | filter:filterProp">
                         <div class="item">
                             <input type="text" ng-model="task.title" ng-change="taskUpdated(this)" />
-                            <a href="#/task/{{task.$$hashKey}}/delete" ng-click="deleteTask(task.$$hashKey)">Delete task</a>
+                            <a href="#/task/{{task.$$hashKey}}/delete" ng-click="deleteTask(task.$$hashKey)">del</a>
+                            <br />
+                            <span>Assignee: {{task.assignee}}</span>
+                            <br />
+                            <span>Estimated duration: {{task.estimate}}</span>
                         </div>
                     </li>
                 </ul>
             </div>
         </form>
-
         <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
         <script type="text/javascript" src="scripts/controllers.js"></script>
         <script type="text/javascript" src="scripts/services.js"></script>
         <script type="text/javascript" src="scripts/routers.js"></script>

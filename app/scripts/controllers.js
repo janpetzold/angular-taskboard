@@ -1,5 +1,20 @@
 function StoryController($scope, StorageService) {
+    // Model for all stories
     $scope.stories = StorageService.getStories();
+
+    // Model for all assignees
+    $scope.assignees = StorageService.getAssignees();
+
+    $scope.orderProp = "age";
+
+    // Watch Stories for changes to immediately update the task count for each level
+    $scope.$watch('stories', function(stories) {
+        $scope.tasksUndone = getTasksForLevel($scope.stories, 0);
+        $scope.tasksProgressing = getTasksForLevel($scope.stories, 1);
+        $scope.tasksResolved = getTasksForLevel($scope.stories, 2);
+        $scope.tasksDone = getTasksForLevel($scope.stories, 3);
+    }, true);
+
     $scope.taskUpdated = function(element) {
         benchmark.start();
 
@@ -28,7 +43,7 @@ function StoryController($scope, StorageService) {
             name : ''
         },
         "title" : '',
-        "description" : '',
+        "assignee" : '',
         "estimate" : 1,
         "status" : 0,
         "time" : new Date().getTime()
@@ -85,8 +100,17 @@ function StoryController($scope, StorageService) {
 
             addTaskToStory(story, task);
 
+            // Create assignee by name
+            var assignee = createNewAssignee(task.assignee);
+
+            // Add assignee to model
+            $scope.assignees = addAssignee($scope.assignees, assignee);
+
             // Update stories in storage
             StorageService.setStories($scope.stories);
+
+            // Update assignees in storage
+            StorageService.setAssignees($scope.assignees);
 
             // Hide the input dialog
             $scope.newTask.hidden = true;
@@ -94,7 +118,7 @@ function StoryController($scope, StorageService) {
     };
 
     $scope.deleteTask = function(key) {
-        console.log("Lösche Task " + key);
+        console.log("Deleting task " + key);
         for (var story in $scope.stories) {
             if($scope.stories[story].hasOwnProperty("tasks")) {
                 var tasks = $scope.stories[story].tasks;
@@ -102,11 +126,23 @@ function StoryController($scope, StorageService) {
                     if(tasks[task].$$hashKey === key) {
                         tasks.splice(task, 1);
                         StorageService.setStories($scope.stories);
+                        // TODO: Check if task.assignee is used in any other task - if not, delete him
                     }
                 }
             }
         }
     };
+
+    $scope.resetFilter = function() {
+        $scope.filterProp = "";
+    }
+}
+
+function createNewAssignee(name) {
+    var assignee = {
+        name : name
+    };
+    return assignee;
 }
 
 function createNewStory(story) {
@@ -121,12 +157,23 @@ function createNewStory(story) {
 function createNewTask(task) {
     var task = {
         "title" : task.title,
-        "description" : task.description,
+        "assignee" : task.assignee,
         "estimate" : task.estimate,
         "status" : task.status,
         "time" : task.time
     }
     return task;
+}
+
+function addAssignee(assignees, assignee) {
+    if(assignees && assignees.length > 0) {
+        if(!_.find(assignees, function(a) { return a.name === assignee.name })) {
+            assignees.push(assignee);
+        }
+    } else {
+        assignees = [assignee];
+    }
+    return assignees;
 }
 
 function addTaskToStory(story, task) {
@@ -135,7 +182,6 @@ function addTaskToStory(story, task) {
     } else {
         story.tasks = [task];
     }
-    console.log(story);
 }
 
 function getStoryByHashKey(stories, key) {
@@ -144,6 +190,21 @@ function getStoryByHashKey(stories, key) {
             return stories[story];
         }
     }
+}
+
+function getTasksForLevel(stories, level) {
+    var count = 0;
+    for (var story in stories) {
+        if(stories[story].hasOwnProperty("tasks")) {
+            var tasks = stories[story].tasks;
+            for(var task in tasks) {
+                if(tasks[task].status === level) {
+                    count++;
+                }
+            }
+        }
+    }
+    return count;
 }
 
 
