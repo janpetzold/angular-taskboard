@@ -17,7 +17,7 @@
             <div class="sortingContainer">
                 <span>Sort by:</span>
                 <select ng-Model="orderProp">
-                    <option value="age">Age</option>
+                    <option value="-age">Age</option>
                     <option value="priority">Priority</option>
                 </select>
             </div>
@@ -66,6 +66,7 @@
                 <input type="submit" value="Add" ng-click="newTask.add()"/>
             </div>
 
+            <!-- Header for story status -->
             <ul class="storyStatus">
                 <li>ToDo ({{tasksUndone}})</li>
                 <li>Progressing ({{tasksProgressing}})</li>
@@ -73,14 +74,22 @@
                 <li>Done ({{tasksDone}})</li>
             </ul>
 
-            <div class="storyContainer" ng-repeat="story in stories | orderBy:orderProp">
-                <h2>This is story {{story.name}}, priority {{story.priority}}</h2>
-                <a href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">add</a>
-                <a href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">del</a>
-                <div class="dropzone">
+            <!-- Placeholder for potential dragging targets -->
+            <ul class="taskTargets">
+                <li id="taskTargetToDo" class="taskTarget" ng-hide="taskTargets.targetToDo.hidden" droppable></li>
+                <li id="taskTargetProgress" class="taskTarget" ng-hide="taskTargets.targetProgress.hidden" droppable></li>
+                <li id="taskTargetResolved" class="taskTarget" ng-hide="taskTargets.targetResolved.hidden" droppable></li>
+                <li id="taskTargetDone" class="taskTarget" ng-hide="taskTargets.targetDone.hidden" droppable></li>
+           </ul>
+
+            <div class="dropzone" droppable>
+                <div class="storyContainer" ng-repeat="story in stories | orderBy:orderProp">
+                    <h2>This is story {{story.name}}, priority {{story.priority}}</h2>
+                    <a href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">add</a>
+                    <a href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">del</a>
                     <ul class="story">
                         <li class="task" ng-repeat="task in story.tasks | filter:filterProp">
-                            <div class="item itemStatus{{task.status}}" draggable="true">
+                            <div id="{{task.$$hashKey}}" class="item itemStatus{{task.status}}" draggable>
                                 <input type="text" ng-model="task.title" ng-change="taskUpdated(this)" />
                                 <a href="#/task/{{task.$$hashKey}}/delete" ng-click="deleteTask(task.$$hashKey)">del</a>
                                 <br />
@@ -99,6 +108,5 @@
         <script type="text/javascript" src="scripts/controllers.js"></script>
         <script type="text/javascript" src="scripts/services.js"></script>
         <script type="text/javascript" src="scripts/routers.js"></script>
-        <script type="text/javascript" src="scripts/listeners.js"></script>
 </body>
 </html>

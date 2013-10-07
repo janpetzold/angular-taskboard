@@ -5,7 +5,7 @@ function StoryController($scope, StorageService) {
     // Model for all assignees
     $scope.assignees = StorageService.getAssignees();
 
-    $scope.orderProp = "age";
+    $scope.orderProp = "-age";
 
     // Watch Stories for changes to immediately update the task count for each level
     $scope.$watch('stories', function(stories) {
@@ -15,8 +15,52 @@ function StoryController($scope, StorageService) {
         $scope.tasksDone = getTasksForLevel($scope.stories, 3);
     }, true);
 
+    // Define task targets state - hidden by default
+    $scope.taskTargets = {
+        "targetToDo": {
+            "hidden" : true
+        },
+        "targetProgress": {
+            "hidden" : true
+        },
+        "targetResolved": {
+            "hidden" : true
+        },
+        "targetDone": {
+            "hidden" : true
+        }
+    };
+
+    $scope.handleDragStateFromToDo = function() {
+        $scope.taskTargets.targetProgress.hidden = false;
+        $scope.taskTargets.targetResolved.hidden = false;
+    };
+
+    $scope.handleDragStateFromProgress = function() {
+        $scope.taskTargets.targetToDo.hidden = false;
+        $scope.taskTargets.targetResolved.hidden = false;
+    };
+
+    $scope.handleDragStateFromResolved = function() {
+        $scope.taskTargets.targetToDo.hidden = false;
+        $scope.taskTargets.targetProgress.hidden = false;
+    };
+
+    $scope.handleResetDragState = function() {
+       for(var target in $scope.taskTargets) {
+           $scope.taskTargets[target].hidden = true;
+       }
+    };
+
+    $scope.changeStateForTask = function(taskId, state) {
+        var task = getTaskByHashKey($scope.stories, taskId);
+        task.status = state;
+
+        StorageService.setStories($scope.stories);
+    };
+
     $scope.taskUpdated = function(element) {
-        benchmark.start();
+        simplestBenchmark.start();
 
         // TODO: Any chance to implement undo?
         var storyIndex = element.$parent.$index;
@@ -25,7 +69,7 @@ function StoryController($scope, StorageService) {
         $scope.stories[storyIndex].tasks[taskIndex].title = element.task.title;
         StorageService.setStories($scope.stories);
 
-        benchmark.stop();
+        simplestBenchmark.stop();
     };
 
     $scope.newStory =  {
@@ -47,7 +91,7 @@ function StoryController($scope, StorageService) {
         "estimate" : 1,
         "status" : 0,
         "time" : new Date().getTime()
-    }
+    };
 
     $scope.newStory.triggerDialog = function() {
         if($scope.newStory.hidden === false) {
@@ -193,6 +237,35 @@ function addTaskToStory(story, task) {
     }
 }
 
+function getTaskByHashKey(stories, key) {
+    for (var story in stories) {
+        if(stories[story].hasOwnProperty("tasks")) {
+            var tasks = stories[story].tasks;
+            for(var task in tasks) {
+                if(tasks[task].$$hashKey === key) {
+                    return tasks[task];
+                }
+            }
+        }
+    }
+    return null;
+}
+
+function getTaskStatusByHashKey(key) {
+    var stories = StorageService.getStories();
+    for (var story in stories) {
+        if(stories[story].hasOwnProperty("tasks")) {
+            var tasks = stories[story].tasks;
+            for(var task in tasks) {
+                if(tasks[task].$$hashKey === key) {
+                    return tasks[task].status;
+                }
+            }
+        }
+    }
+    return null;
+}
+
 function getStoryByHashKey(stories, key) {
     for (var story in stories) {
         if(stories[story].$$hashKey === key) {
@@ -218,7 +291,7 @@ function getTasksForLevel(stories, level) {
 
 
 
-var benchmark = (function() {
+var simplestBenchmark = (function() {
     var startTime;
 
     return {
