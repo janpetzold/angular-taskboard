@@ -1,73 +1,202 @@
+/* Define web font */
+@font-face {
+    font-family: 'roboto-regular';
+    src: url('fonts/Roboto-Regular-webfont.eot');
+    src: url('fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/Roboto-Regular-webfont.woff') format('woff'),
+    url('fonts/Roboto-Regular-webfont.ttf') format('truetype'),
+    url('fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'roboto-light-italic';
+    src: url('fonts/Roboto-LightItalic-webfont.eot');
+    src: url('fonts/Roboto-LightItalic-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/Roboto-LightItalic-webfont.woff') format('woff'),
+    url('fonts/Roboto-LightItalic-webfont.ttf') format('truetype'),
+    url('fonts/Roboto-LightItalic-webfont.svg#robotothin_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-    background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    background: #FFFFFF;
+    font-family: 'roboto-regular', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 100%;
     color: #333;
     overflow: hidden;
 }
 
+h1 {
+    font-family: 'roboto-light-italic', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2.8em;
+}
+
 h2 {
-    margin: 0;
+    margin: 0px;
     font-size: 1em;
+    font-weight: normal;
+    color: #191B28;
     float: left;
 }
 
+select {
+    font-family: 'roboto-regular', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #FFFAE4;
+    border: 1px solid #191B28;
+    border-radius: 3px;
+}
+
+.modificators {
+    float: right;
+    color: #FFFFFF;
+    margin-right: 6px;
+    margin-top: -70px;
+}
+
+.sortingContainer, .filterContainer {
+    display: inline;
+    margin-left: 6px;
+}
+
+.sortingContainer a, .filterContainer a {
+    font-size: 0.8em;
+}
+
+.buttonDecoration, .buttonDecorationSmall {
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 6px;
+    background-color: #004563;
+    color: #FFFFFF;
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.4) inset, 0px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.buttonDecorationSmall {
+    background-color: #98CC96;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.iconButton {
+    margin-left: 6px;
+}
+
+.icon {
+    display: inline-block;
+    width: 14px;
+    height: 18px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.iconBright {
+    background-image: url("../images/icons_bright.png");
+}
+
+.iconDark {
+    background-image: url("../images/icons_dark.png");
+}
+
+.iconPlus {
+    background-position: 1px -3px;
+}
+
+.iconPerson {
+    background-position: -0px -28px;
+}
+
+.iconFilter {
+    background-position: -77px -4px;
+}
+
+.iconReset {
+    background-position: -167px -4px;
+}
+
+.iconDelete {
+    background-position: 215px -4px;
+}
+
 .storyContainer {
-    margin-top: 14px;
+    margin-top: 5px;
+    padding: 5px 0px 0px 5px;
+}
+
+.dropzone {
+    /*background-image: url("../images/back_blueish.png");*/
+    background-color: #FFFFFF;
 }
 
 ul {
     clear: both;
-    margin: 0;
-    padding: 0;
+    padding: 0px;
 }
 
 ul.storyStatus li {
-    background-color: #C09853;
+    background-color: #E83A25;
+    color: #FFFFFF;
+    font-size: 1.3em;
     width: 25%;
-    padding: 3px 0px 3px 0px;
+    padding: 5px 0px 5px 0px;
     text-align: center;
-    font-weight: bold;
+    font-weight: normal;
     list-style-type: none;
     float: left;
 }
 
 li.taskTarget {
     position: absolute;
-    width: 25%;
+    width: 23.5%;
     list-style-type: none;
+    border-radius: 8px;
+    background-color: #E83A25;
 }
 
 li#taskTargetToDo {
-    border: 3px dotted #0000ff;
-    left: 0%;
+    left: 0px;
 }
 
 li#taskTargetProgress {
-    border: 3px dotted #01ff0b;
-    left: 25%;
+    left: 26.275%;
 }
 
 li#taskTargetResolved {
-    border: 3px dotted #ff5a00;
-    left: 50%;
+    left: 52.6%;
 }
 
 li#taskTargetDone {
-    border: 3px dotted #ff00af;
-    left: 75%;
+    left: 78%;
 }
 
 .story li {
-    width: 25%;
+    width: 22%;
+    padding-bottom: 5px;
     list-style-type: none;
+    font-size: 0.8em;
+}
+
+
+.story li textarea {
+    font-family: 'roboto-regular', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    width: 98%;
+    background-color: #FFFCFB;
+    margin: 0px;
+    padding: 1%;
+    border: 0px;
+    border-radius: 3px;
 }
 
 .item {
     width: 100%;
-    border: 1px solid #DFDFDF;
-    margin-top: 2px;
-    padding: 2px;
+    border-radius: 6px;
+    background-color: #FFE9A3;
+    margin-top: 3px;
+    padding: 5px;
     cursor : move;
 }
 
@@ -76,13 +205,19 @@ li#taskTargetDone {
 }
 
 .itemStatus1 {
-    margin-left: 100%;
+    margin-left: 120%;
 }
 
 .itemStatus2 {
-    margin-left: 200%;
+    margin-left: 240%;
 }
 
 .itemStatus3 {
-    margin-left: 300%;
+    margin-left: 360%;
+}
+
+.item .taskDelete {
+    float: right;
+    margin-right: 3px;
+    margin-top: -15px;
 }

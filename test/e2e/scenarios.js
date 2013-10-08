@@ -10,7 +10,7 @@ describe('AngularStoriesTest', function() {
     });
 
     it('Check greeting message', function() {
-        expect(element('h1').text()).toBe('angular-taskboard, Version 1');
+        expect(element('h1').text()).toBe('the simple taskboard');
     });
   });
 });

@@ -1,7 +1,7 @@
 <!doctype html>
 <html ng-app="stories">
     <head>
-        <title>angular-taskboard</title>
+        <title>the simple taskboard</title>
 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,28 +11,35 @@
         <link rel="stylesheet" href="styles/main.css">
     </head>
     <body>
-        <h1>angular-taskboard, Version {{0 + 1}}</h1>
-
         <form name="allStories" ng-controller="StoryController">
-            <div class="sortingContainer">
-                <span>Sort by:</span>
-                <select ng-Model="orderProp">
-                    <option value="-age">Age</option>
-                    <option value="priority">Priority</option>
-                </select>
+            <div class="headlineContainer">
+                <h1>the simple taskboard</h1>
+
+                <ul class="modificators">
+                    <li class="sortingContainer buttonDecoration">
+                        <pre class="icon iconBright iconFilter" alt="Order by" title="Order by"></pre>
+                        <select ng-Model="orderProp" alt="Order by" title="Order by">
+                            <option value="-age">Age</option>
+                            <option value="priority">Priority</option>
+                        </select>
+                    </li>
+
+                    <li class="filterContainer buttonDecoration">
+                        <pre class="icon iconBright iconPerson" alt="Filter by assignee" title="Filter by assignee"></pre>
+                        <select ng-Model="filterProp" alt="Filter by assignee" title="Filter by assignee">
+                            <option ng-repeat="assignee in assignees" ng-model="assignee.name" value="{{assignee.name}}">{{assignee.name}}</option>
+                        </select>
+                        <a href="#/resetFilter" ng-click="resetFilter()">
+                            <pre class="icon iconBright iconReset" alt="Reset filter" title="Reset Filter"></pre>
+                        </a>
+                    </li>
+                </ul>
             </div>
 
-            <div class="filterContainer">
-                <span>Filter by assignee:</span>
-                <select ng-Model="filterProp">
-                    <option ng-repeat="assignee in assignees" ng-model="assignee.name" value="{{assignee.name}}">{{assignee.name}}</option>
-                </select>
-                <a href="#/resetFilter" ng-click="resetFilter()">Reset filter</a>
-            </div>
-
-            <br />
-
-            <a href="#/story/add" ng-click="newStory.triggerDialog()">add new story</a>
+            <a class="iconButton buttonDecoration" href="#/story/add" ng-click="newStory.triggerDialog()">
+                <pre class="icon iconBright iconPlus" alt="add new story" title="add new story"></pre>
+                <span>add new story</span>
+            </a>
 
             <div class="addStoryContainer" ng-hide="newStory.hidden">
                 <label for="storyName">Name</label>
@@ -84,18 +91,25 @@
 
             <div class="dropzone" droppable>
                 <div class="storyContainer" ng-repeat="story in stories | orderBy:orderProp">
-                    <h2>This is story {{story.name}}, priority {{story.priority}}</h2>
-                    <a href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">add</a>
-                    <a href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">del</a>
+                    <h2>This is story <strong>{{story.name}}</strong>, priority {{story.priority}} ({{story.tasks.length}} tasks)</h2>
+                    <a class="buttonDecorationSmall" href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">
+                        <pre class="icon iconDark iconPlus" alt="add new task" title="add new task"></pre></a>
+                    <a class="buttonDecorationSmall" href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">
+                        <pre class="icon iconDark iconDelete" alt="delete this story" title="delete this story"></pre></a>
                     <ul class="story">
                         <li class="task" ng-repeat="task in story.tasks | filter:filterProp">
                             <div id="{{task.$$hashKey}}" class="item itemStatus{{task.status}}" draggable>
-                                <input type="text" ng-model="task.title" ng-change="taskUpdated(this)" />
-                                <a href="#/task/{{task.$$hashKey}}/delete" ng-click="deleteTask(task.$$hashKey)">del</a>
+                                <textarea ng-model="task.title"  ng-change="taskUpdated(this)">{{task.title}}</textarea>
+
                                 <br />
-                                <span>Assignee: {{task.assignee}}</span>
+                                <span>Assignee: <strong>{{task.assignee}}</strong></span>
+
                                 <br />
-                                <span>Estimated duration: {{task.estimate}}</span>
+                                <span>Estimated duration: <strong>{{task.estimate}}</strong></span>
+
+                                <a class="taskDelete buttonDecorationSmall" href="#/task/{{task.$$hashKey}}/delete" ng-click="deleteTask(task.$$hashKey)">
+                                    <pre class="icon iconDark iconDelete" alt="delete this task" title="delete this task"></pre>
+                                </a>
                             </div>
                         </li>
                     </ul>

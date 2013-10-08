@@ -30,10 +30,10 @@ app.directive('draggable', function() {
             e.dataTransfer.setData("Text", this.id);
 
             // Update height of other taskTargets depending on the current height
-            $(".taskTarget").height($(el).height());
+            $(".taskTarget").height($(el).height() + 20);
 
             // Update top position of other taskTargets depending on the current top
-            $(".taskTarget").css("top", $(el).position().top);
+            $(".taskTarget").css("top", $(el).position().top - 3);
 
             // Show targets depending on state
             if(scope.task.status === 0) {
