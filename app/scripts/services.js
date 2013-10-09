@@ -1,5 +1,13 @@
 var app = angular.module('stories', []);
 
+$(document).ready(function() {
+    $(".item textarea").each(function(index) {
+        $(this).css("overflow", "hidden");
+        $(this).height(24);
+        $(this).height($(this).prop("scrollHeight") + 12);
+    });
+});
+
 app.provider('StorageService', function() {
     this.$get = function() {
         return {

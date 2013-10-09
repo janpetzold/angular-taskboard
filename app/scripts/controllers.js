@@ -59,17 +59,18 @@ function StoryController($scope, StorageService) {
         StorageService.setStories($scope.stories);
     };
 
-    $scope.taskUpdated = function(element) {
-        simplestBenchmark.start();
+    $scope.taskUpdated = function(key) {
+        // Update textarea height so it shows the entire text
+        $("#" + key + " textarea").height(24);
+        $("#" + key + " textarea").height($("#" + key + " textarea").prop("scrollHeight") + 12);
 
-        // TODO: Any chance to implement undo?
-        var storyIndex = element.$parent.$index;
-        var taskIndex =  element.$index;
-
-        $scope.stories[storyIndex].tasks[taskIndex].title = element.task.title;
+        // Update storage on every change
         StorageService.setStories($scope.stories);
+    };
 
-        simplestBenchmark.stop();
+    $scope.taskEstimateUpdated = function() {
+        // Update storage on every change
+        StorageService.setStories($scope.stories);
     };
 
     $scope.changeStoryState = function(story) {
