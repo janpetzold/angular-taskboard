@@ -17,7 +17,7 @@
 
                 <ul class="modificators">
                     <li class="sortingContainer buttonDecoration">
-                        <pre class="icon iconBright iconFilter" alt="Order by" title="Order by"></pre>
+                        <pre class="icon iconDark iconFilter" alt="Order by" title="Order by"></pre>
                         <select ng-Model="orderProp" alt="Order by" title="Order by">
                             <option value="-age">Age</option>
                             <option value="priority">Priority</option>
@@ -25,52 +25,61 @@
                     </li>
 
                     <li class="filterContainer buttonDecoration">
-                        <pre class="icon iconBright iconPerson" alt="Filter by assignee" title="Filter by assignee"></pre>
+                        <pre class="icon iconDark iconPerson" alt="Filter by assignee" title="Filter by assignee"></pre>
                         <select ng-Model="filterProp" alt="Filter by assignee" title="Filter by assignee">
                             <option ng-repeat="assignee in assignees" ng-model="assignee.name" value="{{assignee.name}}">{{assignee.name}}</option>
                         </select>
                         <a href="#/resetFilter" ng-click="resetFilter()">
-                            <pre class="icon iconBright iconReset" alt="Reset filter" title="Reset Filter"></pre>
+                            <pre class="icon iconDark iconReset" alt="Reset filter" title="Reset Filter"></pre>
                         </a>
                     </li>
                 </ul>
             </div>
 
             <a class="iconButton buttonDecoration" href="#/story/add" ng-click="newStory.triggerDialog()">
-                <pre class="icon iconBright iconPlus" alt="add new story" title="add new story"></pre>
+                <pre class="icon iconDark iconPlus" alt="add new story" title="add new story"></pre>
                 <span>add new story</span>
             </a>
 
             <div class="addStoryContainer" ng-hide="newStory.hidden">
-                <label for="storyName">Name</label>
-                <input id="storyName" type="text" ng-model="newStory.name" />
+                <h3>Add a new story</h3>
+                <label for="storyName">Name of the story: </label>
+                <input id="storyName" class="textField" type="text" ng-model="newStory.name" />
+
+                <br />
+
+                <span>Story priority (1 = Max, 5 = Min):</span>
 
                 <fieldset id=storyPriority">
-                    <legend>Priority</legend>
-                    <input type="radio" name="priority" value="1" ng-model="newStory.priority">1 (max)</input>
+                    <input type="radio" name="priority" value="1" ng-model="newStory.priority">1</input>
                     <input type="radio" name="priority" value="2" ng-model="newStory.priority">2</input>
                     <input type="radio" name="priority" value="3" ng-model="newStory.priority">3</input>
                     <input type="radio" name="priority" value="4" ng-model="newStory.priority">4</input>
-                    <input type="radio" name="priority" value="5" ng-model="newStory.priority">5 (min)</input>
+                    <input type="radio" name="priority" value="5" ng-model="newStory.priority">5</input>
                 </fieldset>
 
-                <input type="submit" value="Add" ng-click="newStory.add()"/>
+                <a class="buttonDecoration addButtonCentered" value="Add" ng-click="newStory.add()">
+                    <pre class="icon iconDark iconOk" alt="add" title="add"></pre>
+                    <span>Add</span>
+                </a>
             </div>
 
             <div class="addTaskContainer" ng-hide="newTask.hidden">
-                <label for="taskStory">Story</label>
-                <input id="taskStory" type="text" ng-model="newTask.story.name" readonly />
+                <h3>Add new task for story <strong>{{newTask.story.name}}</strong></h3>
 
-                <label for="taskTitle">Title</label>
-                <input id="taskTitle" type="text" ng-model="newTask.title" />
+                <label for="taskTitle">Task description:</label>
+                <input id="taskTitle" class="textField" type="text" ng-model="newTask.title" />
 
-                <label for="taskAssignee">Assignee</label>
-                <input id="taskAssignee" type="text" ng-model="newTask.assignee" />
+                <label for="taskAssignee">Assignee for this task:</label>
+                <input id="taskAssignee" class="textField" type="text" ng-model="newTask.assignee" />
 
-                <label for="taskEstimate">Estimated time</label>
-                <input id="taskEstimate" type="text" ng-model="newTask.estimate" />
+                <label for="taskEstimate">Estimated time:</label>
+                <input id="taskEstimate" class="textSmallField" type="text" ng-model="newTask.estimate" />
 
-                <input type="submit" value="Add" ng-click="newTask.add()"/>
+                <a class="buttonDecoration addButtonCentered" value="Add" ng-click="newTask.add()">
+                    <pre class="icon iconDark iconOk" alt="add" title="add"></pre>
+                    <span>Add</span>
+                </a>
             </div>
 
             <!-- Header for story status -->
@@ -91,12 +100,13 @@
 
             <div class="dropzone" droppable>
                 <div class="storyContainer" ng-repeat="story in stories | orderBy:orderProp">
-                    <h2>This is story <strong>{{story.name}}</strong>, priority {{story.priority}} ({{story.tasks.length}} tasks)</h2>
-                    <a class="buttonDecorationSmall" href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">
+                    <a href="#/story/{{story.$$hashKey}}/collapse" class="{{story.state}}Icon" title="{{story.state}}" ng-click="changeStoryState(story)"></a>
+                    <h2>This is story <strong>{{story.name}}</strong> ({{story.tasks.length}} tasks, X remaining days)</h2>
+                    <a class="buttonDecorationSmall {{story.state}}" href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">
                         <pre class="icon iconDark iconPlus" alt="add new task" title="add new task"></pre></a>
-                    <a class="buttonDecorationSmall" href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">
+                    <a class="buttonDecorationSmall {{story.state}}" href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">
                         <pre class="icon iconDark iconDelete" alt="delete this story" title="delete this story"></pre></a>
-                    <ul class="story">
+                    <ul class="story {{story.state}} borderPriority{{story.priority}}">
                         <li class="task" ng-repeat="task in story.tasks | filter:filterProp">
                             <div id="{{task.$$hashKey}}" class="item itemStatus{{task.status}}" draggable>
                                 <textarea ng-model="task.title"  ng-change="taskUpdated(this)">{{task.title}}</textarea>
@@ -115,7 +125,11 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="cover" ng-hide="newStory.hidden && newTask.hidden" ng-animate="{show: 'fade-show', hide: 'fade-hide'}"></div>
+
         </form>
+
         <script type="text/javascript" src="bower_components/angular/angular.js"></script>
         <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
         <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>

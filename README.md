@@ -10,3 +10,5 @@ TODO:
 - enable editing of remaining time
 - Refactor JavaScript
 - Refactor CSS
+- Type ahead on new task - assignee
+- automatic height of textarea, remove arrow on lower right

@@ -11,51 +11,108 @@
 }
 
 @font-face {
-    font-family: 'roboto-light-italic';
-    src: url('fonts/Roboto-LightItalic-webfont.eot');
-    src: url('fonts/Roboto-LightItalic-webfont.eot?#iefix') format('embedded-opentype'),
-    url('fonts/Roboto-LightItalic-webfont.woff') format('woff'),
-    url('fonts/Roboto-LightItalic-webfont.ttf') format('truetype'),
-    url('fonts/Roboto-LightItalic-webfont.svg#robotothin_italic') format('svg');
+    font-family: 'roboto-medium';
+    src: url('fonts/Roboto-Medium-webfont.eot');
+    src: url('fonts/Roboto-Medium-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/Roboto-Medium-webfont.woff') format('woff'),
+    url('fonts/Roboto-Medium-webfont.ttf') format('truetype'),
+    url('fonts/Roboto-Medium-webfont.svg#robotomedium') format('svg');
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'roboto-light';
+    src: url('fonts/Roboto-Light-webfont.eot');
+    src: url('fonts/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/Roboto-Light-webfont.woff') format('woff'),
+    url('fonts/Roboto-Light-webfont.ttf') format('truetype'),
+    url('fonts/Roboto-Light-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'roboto_condensedlight';
+    src: url('fonts/RobotoCondensed-Light-webfont.eot');
+    src: url('fonts/RobotoCondensed-Light-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/RobotoCondensed-Light-webfont.woff') format('woff'),
+    url('fonts/RobotoCondensed-Light-webfont.ttf') format('truetype'),
+    url('fonts/RobotoCondensed-Light-webfont.svg#roboto_condensedlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'roboto-thin-italic';
+    src: url('fonts/Roboto-ThinItalic-webfont.eot');
+    src: url('fonts/Roboto-ThinItalic-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/Roboto-ThinItalic-webfont.woff') format('woff'),
+    url('fonts/Roboto-ThinItalic-webfont.ttf') format('truetype'),
+    url('fonts/Roboto-ThinItalic-webfont.svg#robotothin_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'roboto_condensedlight_italic';
+    src: url('fonts/RobotoCondensed-LightItalic-webfont.eot');
+    src: url('fonts/RobotoCondensed-LightItalic-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/RobotoCondensed-LightItalic-webfont.woff') format('woff'),
+    url('fonts/RobotoCondensed-LightItalic-webfont.ttf') format('truetype'),
+    url('fonts/RobotoCondensed-LightItalic-webfont.svg#roboto_condensedlight_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 body {
     margin: 0px;
     padding: 0px;
     background: #FFFFFF;
-    font-family: 'roboto-regular', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'roboto-light', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 100%;
     color: #333;
     overflow: hidden;
 }
 
 h1 {
-    font-family: 'roboto-light-italic', "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 2.8em;
+    font-family: 'roboto_condensedlight_italic', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 3.25em;
+    font-weight: normal;
+    margin: 12px 0px 20px 6px;
 }
 
 h2 {
-    margin: 0px;
+    margin: 0px 6px 0px 0px;
     font-size: 1em;
     font-weight: normal;
     color: #191B28;
     float: left;
 }
 
+h3 {
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+strong {
+    font-family: 'roboto-medium', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+}
+
 select {
-    font-family: 'roboto-regular', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'roboto-light', "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: #FFFAE4;
-    border: 1px solid #191B28;
-    border-radius: 3px;
+    border: 1px solid #DFDFDF;
+    border-radius: 0px;
 }
 
 .modificators {
     float: right;
     color: #FFFFFF;
-    margin-right: 6px;
-    margin-top: -70px;
+    margin-right: 8px;
+    margin-top: -65px;
 }
 
 .sortingContainer, .filterContainer {
@@ -70,20 +127,29 @@ select {
 .buttonDecoration, .buttonDecorationSmall {
     text-decoration: none;
     padding: 8px;
-    border-radius: 6px;
-    background-color: #004563;
-    color: #FFFFFF;
+    border-radius: 0px;
+    background-color: #70B85D;
+    color: #191B28;
+    /*
     box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.4) inset, 0px 1px 3px rgba(0, 0, 0, 0.4);
+    */
 }
 
 .buttonDecorationSmall {
-    background-color: #98CC96;
+    background-color: #70B85D;
     padding: 4px;
-    border-radius: 4px;
+    border-radius: 0px;
+}
+
+.addButtonCentered {
+    display: block;
+    cursor: pointer;
+    margin: 0px auto;
+    width: 47px;
 }
 
 .iconButton {
-    margin-left: 6px;
+    margin-left: 8px;
 }
 
 .icon {
@@ -103,7 +169,7 @@ select {
 }
 
 .iconPlus {
-    background-position: 1px -3px;
+    background-position: 2px -3px;
 }
 
 .iconPerson {
@@ -115,11 +181,47 @@ select {
 }
 
 .iconReset {
-    background-position: -167px -4px;
+    background-position: -167px -2px;
 }
 
 .iconDelete {
-    background-position: 215px -4px;
+    background-position: 214px -4px;
+}
+
+.iconOk {
+    background-position: 88px -4px;
+}
+
+ul.collapsed {
+     display : none;
+ }
+
+ul.expanded {
+    display: block;
+}
+
+a.collapsed {
+    visibility: hidden;
+}
+
+a.expanded {
+    visibility: visible;
+}
+
+.collapsedIcon, .expandedIcon {
+    float: left;
+    width: 18px;
+    height: 17px;
+    background-image: url("../images/icons_dark.png");
+    background-position: 112px -4px;
+}
+
+.collapsedIcon {
+    background-position: 49px -4px;
+}
+
+.expandedIcon {
+    background-position: 112px -4px;
 }
 
 .storyContainer {
@@ -128,13 +230,16 @@ select {
 }
 
 .dropzone {
-    /*background-image: url("../images/back_blueish.png");*/
     background-color: #FFFFFF;
 }
 
 ul {
     clear: both;
     padding: 0px;
+}
+
+ul.storyStatus {
+    margin-top: 16px;
 }
 
 ul.storyStatus li {
@@ -153,7 +258,7 @@ li.taskTarget {
     position: absolute;
     width: 23.5%;
     list-style-type: none;
-    border-radius: 8px;
+    border-radius: 0px;
     background-color: #E83A25;
 }
 
@@ -175,6 +280,7 @@ li#taskTargetDone {
 
 .story li {
     width: 22%;
+    padding-top: 2px;
     padding-bottom: 5px;
     list-style-type: none;
     font-size: 0.8em;
@@ -182,19 +288,19 @@ li#taskTargetDone {
 
 
 .story li textarea {
-    font-family: 'roboto-regular', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'roboto-light', "Helvetica Neue", Helvetica, Arial, sans-serif;
     width: 98%;
-    background-color: #FFFCFB;
+    background-color: #FFFFFF;
     margin: 0px;
     padding: 1%;
     border: 0px;
-    border-radius: 3px;
+    border-radius: 0px;
 }
 
 .item {
     width: 100%;
-    border-radius: 6px;
-    background-color: #FFE9A3;
+    border-radius: 0px;
+    background-color: #54D0ED;
     margin-top: 3px;
     padding: 5px;
     cursor : move;
@@ -220,4 +326,87 @@ li#taskTargetDone {
     float: right;
     margin-right: 3px;
     margin-top: -15px;
+}
+
+.borderPriority1, .borderPriority2, .borderPriority3, .borderPriority4, .borderPriority5 {
+    border-left-width: 2px;
+    border-left-style: solid;
+}
+
+.borderPriority1 {
+    border-left-color: #E83A25;
+}
+
+.borderPriority2 {
+     border-left-color: #E85f54;
+}
+
+.borderPriority3 {
+    border-left-color: #E88881;
+}
+
+.borderPriority4 {
+    border-left-color: #E8AEA9;
+}
+
+.borderPriority5 {
+    border-left-color: #E8D0D0;
+}
+
+.addStoryContainer, .addTaskContainer {
+    z-index: 12;
+    position: fixed;
+    width: 360px;
+    top: 20%;
+    left: 35%; /* fallback for browsers without support for calc() */
+    left: calc(50% - 180px);
+    padding: 14px;
+    border-radius: 0px;
+    background-color: #FFFFFF;
+}
+
+.addTaskContainer label {
+    display: block;
+}
+
+.addStoryContainer input, .addTaskContainer input {
+    font-family: 'roboto-light', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border: 1px solid #DFDFDF;
+    border-radius: 0px;
+    margin-bottom: 12px;
+}
+
+.textField {
+    width: 100%;
+}
+
+.textSmallField {
+    display: block;
+    text-align: center;
+    margin: 0px auto;
+    width: 40px;
+}
+
+.textReadOnly {
+    background-color: #50BCD9;
+}
+
+.addStoryContainer fieldset {
+    border: 0px;
+    text-align: center;
+}
+
+.addStoryContainer fieldset input {
+    margin-left: 8px;
+}
+
+.cover {
+    position: fixed;
+    opacity: 0.8;
+    z-index: 11;
+    top: 0px;
+    left: 0px;
+    background-color: #000000;
+    width : 100%;
+    height: 100%;
 }

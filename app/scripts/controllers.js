@@ -5,7 +5,7 @@ function StoryController($scope, StorageService) {
     // Model for all assignees
     $scope.assignees = StorageService.getAssignees();
 
-    $scope.orderProp = "-age";
+    $scope.orderProp = "Age";
 
     // Watch Stories for changes to immediately update the task count for each level
     $scope.$watch('stories', function(stories) {
@@ -70,6 +70,17 @@ function StoryController($scope, StorageService) {
         StorageService.setStories($scope.stories);
 
         simplestBenchmark.stop();
+    };
+
+    $scope.changeStoryState = function(story) {
+        if(story.state === "expanded") {
+            story.state = "collapsed";
+        } else if(story.state === "collapsed") {
+            story.state = "expanded";
+        }
+
+        // Update stories in storage
+        StorageService.setStories($scope.stories);
     };
 
     $scope.newStory =  {
@@ -193,7 +204,8 @@ function createNewStory(story) {
     var story = {
         "name" : story.name,
         "priority" : story.priority,
-        "time" : story.time
+        "time" : story.time,
+        "state" : "expanded"
     };
     return story;
 }
