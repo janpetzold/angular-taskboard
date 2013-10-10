@@ -5,7 +5,7 @@ function StoryController($scope, StorageService) {
     // Model for all assignees
     $scope.assignees = StorageService.getAssignees();
 
-    $scope.orderProp = "Age";
+    $scope.orderProp = "-time";
 
     // Watch Stories for changes to immediately update the task count for each level
     $scope.$watch('stories', function(stories) {
@@ -52,6 +52,16 @@ function StoryController($scope, StorageService) {
        }
     };
 
+    $scope.getRemaining = function(story) {
+        var counter = 0;
+        if(story.hasOwnProperty("tasks")) {
+            for (var task in story.tasks) {
+                counter = counter + parseInt(story.tasks[task].estimate, 10);
+            }
+        }
+        return counter;
+    }
+
     $scope.changeStateForTask = function(taskId, state) {
         var task = getTaskByHashKey($scope.stories, taskId);
         task.status = state;
@@ -59,10 +69,10 @@ function StoryController($scope, StorageService) {
         StorageService.setStories($scope.stories);
     };
 
-    $scope.taskUpdated = function(key) {
+    $scope.taskUpdated = function(task) {
         // Update textarea height so it shows the entire text
-        $("#" + key + " textarea").height(24);
-        $("#" + key + " textarea").height($("#" + key + " textarea").prop("scrollHeight") + 12);
+        $("#task" + task.id + " textarea").height(24);
+        $("#task" + task.id + " textarea").height($("#task" + task.id + " textarea").prop("scrollHeight") + 12);
 
         // Update storage on every change
         StorageService.setStories($scope.stories);
@@ -94,10 +104,7 @@ function StoryController($scope, StorageService) {
     // Set the pre-defined values of a new task
     $scope.newTask = {
         "hidden" : true,
-        "story" : {
-            key : '',
-            name : ''
-        },
+        "storyId" : null,
         "title" : '',
         "assignee" : '',
         "estimate" : 1,
@@ -119,7 +126,7 @@ function StoryController($scope, StorageService) {
             var story = createNewStory($scope.newStory);
 
             // Update stories in view and storage
-            $scope.stories = addStory($scope.stories, story)
+            $scope.stories = addStory($scope.stories, story);
             StorageService.setStories($scope.stories);
 
             // Hide the input dialog
@@ -127,43 +134,39 @@ function StoryController($scope, StorageService) {
         }
     };
 
-    $scope.deleteStory = function(key) {
-        for (var story in $scope.stories) {
-            if($scope.stories[story].$$hashKey === key) {
-                $scope.stories.splice(story, 1);
-                StorageService.setStories($scope.stories);
+    $scope.deleteStory = function(story) {
+        for(var i in $scope.stories) {
+            if($scope.stories[i].id === story.id) {
+                $scope.stories.splice(i, 1);
             }
         }
+        StorageService.setStories($scope.stories);
     };
 
-    $scope.newTask.triggerDialog = function(key) {
+    $scope.newTask.triggerDialog = function(story) {
         if($scope.newTask.hidden === false) {
             $scope.newTask.hidden = true;
         } else {
             $scope.newTask.hidden = false;
-            var story = getStoryByHashKey($scope.stories, key);
-            $scope.newTask.story.name = story.name;
-            $scope.newTask.story.key = key;
+            $scope.newTask.storyId = story.id;
         }
     };
 
-    $scope.newTask.add = function() {
+    $scope.newTask.add = function(task) {
         if($scope.newTask.title && $scope.newTask.title.length > 0) {
             // Create new task and add it to the existing story
             var task = createNewTask($scope.newTask);
 
-            var story = getStoryByHashKey($scope.stories, $scope.newTask.story.key);
+            addTaskToStories($scope.stories, task);
 
-            addTaskToStory(story, task);
+            // Update stories in storage
+            StorageService.setStories($scope.stories);
 
             // Create assignee by name
             var assignee = createNewAssignee(task.assignee);
 
             // Add assignee to model
             $scope.assignees = addAssignee($scope.assignees, assignee);
-
-            // Update stories in storage
-            StorageService.setStories($scope.stories);
 
             // Update assignees in storage
             StorageService.setAssignees($scope.assignees);
@@ -173,20 +176,10 @@ function StoryController($scope, StorageService) {
         }
     };
 
-    $scope.deleteTask = function(key) {
-        console.log("Deleting task " + key);
-        for (var story in $scope.stories) {
-            if($scope.stories[story].hasOwnProperty("tasks")) {
-                var tasks = $scope.stories[story].tasks;
-                for(var task in tasks) {
-                    if(tasks[task].$$hashKey === key) {
-                        tasks.splice(task, 1);
-                        StorageService.setStories($scope.stories);
-                        // TODO: Check if task.assignee is used in any other task - if not, delete him
-                    }
-                }
-            }
-        }
+    $scope.deleteTask = function(task, taskIndex) {
+        var story = getStoryById($scope.stories, task.storyId);
+        story.tasks.splice(taskIndex, 1);
+        StorageService.setStories($scope.stories);
     };
 
     $scope.resetFilter = function() {
@@ -203,11 +196,13 @@ function createNewAssignee(name) {
 
 function createNewStory(story) {
     var story = {
+        "id" : app.service.getSequenceNumber(),
         "name" : story.name,
         "priority" : story.priority,
         "time" : story.time,
         "state" : "expanded"
     };
+
     return story;
 }
 
@@ -222,6 +217,8 @@ function addStory(stories, story) {
 
 function createNewTask(task) {
     var task = {
+        "id" : app.service.getSequenceNumber(),
+        "storyId" : task.storyId,
         "title" : task.title,
         "assignee" : task.assignee,
         "estimate" : task.estimate,
@@ -242,7 +239,8 @@ function addAssignee(assignees, assignee) {
     return assignees;
 }
 
-function addTaskToStory(story, task) {
+function addTaskToStories(stories, task) {
+    var story = getStoryById(stories, task.storyId)
     if(story.hasOwnProperty("tasks")) {
         story.tasks.push(task);
     } else {
@@ -277,6 +275,14 @@ function getTaskStatusByHashKey(key) {
         }
     }
     return null;
+}
+
+function getStoryById(stories, id) {
+    for (var story in stories) {
+        if(stories[story].id === id) {
+            return stories[story];
+        }
+    }
 }
 
 function getStoryByHashKey(stories, key) {

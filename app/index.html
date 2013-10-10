@@ -19,7 +19,7 @@
                     <li class="sortingContainer buttonDecoration">
                         <pre class="icon iconDark iconFilter" alt="Order by" title="Order by"></pre>
                         <select ng-Model="orderProp" alt="Order by" title="Order by">
-                            <option value="-age">Age</option>
+                            <option value="-time">Age</option>
                             <option value="priority">Priority</option>
                         </select>
                     </li>
@@ -76,7 +76,7 @@
                 <label for="taskEstimate">Estimated time:</label>
                 <input id="taskEstimate" class="textSmallField" type="text" ng-model="newTask.estimate" />
 
-                <a class="buttonDecoration addButtonCentered" value="Add" ng-click="newTask.add()">
+                <a class="buttonDecoration addButtonCentered" value="Add" ng-click="newTask.add(newTask)">
                     <pre class="icon iconDark iconOk" alt="add" title="add"></pre>
                     <span>Add</span>
                 </a>
@@ -100,16 +100,16 @@
 
             <div class="dropzone" droppable>
                 <div class="storyContainer" ng-repeat="story in stories | orderBy:orderProp">
-                    <a href="#/story/{{story.$$hashKey}}/collapse" class="{{story.state}}Icon" title="{{story.state}}" ng-click="changeStoryState(story)"></a>
-                    <h2>Story <strong>{{story.name}}</strong> ({{story.tasks.length}} tasks, X remaining days)</h2>
-                    <a class="buttonDecorationSmall {{story.state}}" href="#/story/{{story.$$hashKey}}/addTask" ng-click="newTask.triggerDialog(story.$$hashKey)">
+                    <a href="#/story/{{story.id}}/collapse" class="{{story.state}}Icon" title="{{story.state}}" ng-click="changeStoryState(story)"></a>
+                    <h2>Story <strong>{{story.name}}</strong> ({{story.tasks.length || 0}} tasks, {{getRemaining(story)}} remaining days)</h2>
+                    <a class="buttonDecorationSmall {{story.state}}" href="#/story/{{story.id}}/addTask" ng-click="newTask.triggerDialog(story)">
                         <pre class="icon iconDark iconPlus" alt="add new task" title="add new task"></pre></a>
-                    <a class="buttonDecorationSmall {{story.state}}" href="#/story/{{story.$$hashKey}}/delete" ng-click="deleteStory(story.$$hashKey)">
+                    <a class="buttonDecorationSmall {{story.state}}" href="#/story/{{story.id}}/delete" ng-click="deleteStory(story)">
                         <pre class="icon iconDark iconDelete" alt="delete this story" title="delete this story"></pre></a>
                     <ul class="story {{story.state}} borderPriority{{story.priority}}">
                         <li class="task" ng-repeat="task in story.tasks | filter:filterProp">
-                            <div id="{{task.$$hashKey}}" class="item itemStatus{{task.status}}" draggable>
-                                <textarea ng-model="task.title" ng-change="taskUpdated(task.$$hashKey)">{{task.title}}</textarea>
+                            <div id="task{{task.id}}"  class="item itemStatus{{task.status}}" draggable>
+                                <textarea ng-model="task.title" ng-change="taskUpdated(task)">{{task.title}}</textarea>
 
                                 <br />
                                 <span>Assignee: <strong>{{task.assignee}}</strong></span>
@@ -117,7 +117,7 @@
                                 <br />
                                 <span>Remaining time: <strong><input class="inputTaskEstimate" type="text" ng-model="task.estimate" ng-change="taskEstimateUpdated()" /></strong></span>
 
-                                <a class="taskDelete buttonDecorationSmall" href="#/task/{{task.$$hashKey}}/delete" ng-click="deleteTask(task.$$hashKey)">
+                                <a class="taskDelete buttonDecorationSmall" href="#/task/{{task.id}}/delete" ng-click="deleteTask(task, $index)">
                                     <pre class="icon iconDark iconDelete" alt="delete this task" title="delete this task"></pre>
                                 </a>
                             </div>
@@ -132,10 +132,8 @@
 
         <script type="text/javascript" src="bower_components/angular/angular.js"></script>
         <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
-        <script type="text/javascript" src="scripts/lib/jquery-elastic.js"></script>
         <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
         <script type="text/javascript" src="scripts/controllers.js"></script>
         <script type="text/javascript" src="scripts/services.js"></script>
-        <script type="text/javascript" src="scripts/routers.js"></script>
 </body>
 </html>

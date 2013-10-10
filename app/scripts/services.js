@@ -8,6 +8,15 @@ $(document).ready(function() {
     });
 });
 
+app.service.getSequenceNumber = function() {
+    var num = parseInt(window.localStorage.getItem("sequenceNumber"), 10);
+    if(!num) {
+        num = 1;
+    }
+    window.localStorage.setItem("sequenceNumber", (num + 1));
+    return num + 1;
+}
+
 app.provider('StorageService', function() {
     this.$get = function() {
         return {
