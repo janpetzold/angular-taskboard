@@ -87,7 +87,6 @@
                 <li>ToDo ({{tasksUndone}})</li>
                 <li>Progressing ({{tasksProgressing}})</li>
                 <li>Resolved ({{tasksResolved}})</li>
-                <li>Done ({{tasksDone}})</li>
             </ul>
 
             <!-- Placeholder for potential dragging targets -->
@@ -95,13 +94,12 @@
                 <li id="taskTargetToDo" class="taskTarget" ng-hide="taskTargets.targetToDo.hidden" droppable></li>
                 <li id="taskTargetProgress" class="taskTarget" ng-hide="taskTargets.targetProgress.hidden" droppable></li>
                 <li id="taskTargetResolved" class="taskTarget" ng-hide="taskTargets.targetResolved.hidden" droppable></li>
-                <li id="taskTargetDone" class="taskTarget" ng-hide="taskTargets.targetDone.hidden" droppable></li>
            </ul>
 
             <div class="dropzone" droppable>
                 <div class="storyContainer" ng-repeat="story in stories | orderBy:orderProp">
                     <a href="#/story/{{story.id}}/collapse" class="{{story.state}}Icon" title="{{story.state}}" ng-click="changeStoryState(story)"></a>
-                    <h2>Story <strong>{{story.name}}</strong> ({{story.tasks.length || 0}} tasks, {{getRemaining(story)}} remaining days)</h2>
+                    <h2>Story <strong>{{story.name}}</strong> ({{story.tasks.length || 0}} tasks, {{getRemainingTime(story)}} remaining days)</h2>
                     <a class="buttonDecorationSmall {{story.state}}" href="#/story/{{story.id}}/addTask" ng-click="newTask.triggerDialog(story)">
                         <pre class="icon iconDark iconPlus" alt="add new task" title="add new task"></pre></a>
                     <a class="buttonDecorationSmall {{story.state}}" href="#/story/{{story.id}}/delete" ng-click="deleteStory(story)">
@@ -133,7 +131,13 @@
         <script type="text/javascript" src="bower_components/angular/angular.js"></script>
         <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
         <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
+        <script type="text/javascript" src="scripts/app.js"></script>
         <script type="text/javascript" src="scripts/controllers.js"></script>
-        <script type="text/javascript" src="scripts/services.js"></script>
+        <script type="text/javascript" src="scripts/providers.js"></script>
+        <script type="text/javascript" src="scripts/directives.js"></script>
+        <script type="text/javascript" src="scripts/helpers.js"></script>
+        <script type="text/javascript" src="scripts/stories.js"></script>
+        <script type="text/javascript" src="scripts/tasks.js"></script>
+        <script type="text/javascript" src="scripts/assignees.js"></script>
 </body>
 </html>

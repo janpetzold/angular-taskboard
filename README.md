@@ -12,3 +12,4 @@ TODO:
 - Refactor CSS
 - Type ahead on new task - assignee
 - automatic height of textarea, remove arrow on lower right
+- Evaluate potential usage of RequireJS

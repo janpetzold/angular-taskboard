@@ -1,5 +1,7 @@
-/* Define web font */
-
+/*
+ * Define web fonts
+ * TODO: Improve performance by just including necessary characters
+*/
 @font-face {
     font-family: 'roboto-medium';
     src: url('fonts/Roboto-Medium-webfont.eot');
@@ -35,8 +37,8 @@
 
 
 body {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     background: #FFFFFF;
     font-family: 'roboto-light', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 100%;
@@ -48,11 +50,11 @@ h1 {
     font-family: 'roboto_condensedlight_italic', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 3.25em;
     font-weight: normal;
-    margin: 12px 0px 20px 6px;
+    margin: 12px 0 20px 6px;
 }
 
 h2 {
-    margin: 0px 6px 0px 0px;
+    margin: 0 6px 0 0;
     font-size: 1em;
     font-weight: normal;
     color: #191B28;
@@ -73,7 +75,7 @@ select {
     font-family: 'roboto-light', "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: #FFFAE4;
     border: 1px solid #DFDFDF;
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 .modificators {
@@ -95,7 +97,7 @@ select {
 .buttonDecoration, .buttonDecorationSmall {
     text-decoration: none;
     padding: 8px;
-    border-radius: 0px;
+    border-radius: 0;
     background-color: #70B85D;
     color: #191B28;
 }
@@ -103,13 +105,13 @@ select {
 .buttonDecorationSmall {
     background-color: #70B85D;
     padding: 4px;
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 .addButtonCentered {
     display: block;
     cursor: pointer;
-    margin: 0px auto;
+    margin: 0 auto;
     width: 47px;
 }
 
@@ -121,8 +123,8 @@ select {
     display: inline-block;
     width: 14px;
     height: 18px;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 
 .iconBright {
@@ -177,8 +179,7 @@ a.expanded {
     float: left;
     width: 18px;
     height: 17px;
-    background-image: url("../images/icons_dark.png");
-    background-position: 112px -4px;
+    background: url("../images/icons_dark.png") 112px -4px;
 }
 
 .collapsedIcon {
@@ -191,7 +192,7 @@ a.expanded {
 
 .storyContainer {
     margin-top: 5px;
-    padding: 5px 0px 0px 5px;
+    padding: 5px 0 0 5px;
 }
 
 .dropzone {
@@ -200,7 +201,7 @@ a.expanded {
 
 ul {
     clear: both;
-    padding: 0px;
+    padding: 0;
 }
 
 ul.storyStatus {
@@ -211,8 +212,8 @@ ul.storyStatus li {
     background-color: #E83A25;
     color: #FFFFFF;
     font-size: 1.3em;
-    width: 25%;
-    padding: 5px 0px 5px 0px;
+    width: 33.3%;
+    padding: 5px 0 5px 0;
     text-align: center;
     font-weight: normal;
     list-style-type: none;
@@ -221,30 +222,26 @@ ul.storyStatus li {
 
 li.taskTarget {
     position: absolute;
-    width: 23.5%;
+    width: 32%;
     list-style-type: none;
-    border-radius: 0px;
+    border-radius: 0;
     background-color: #E83A25;
 }
 
 li#taskTargetToDo {
-    left: 0px;
+    left: 2px;
 }
 
 li#taskTargetProgress {
-    left: 26.275%;
+    left: 33.5%;
 }
 
 li#taskTargetResolved {
-    left: 52.6%;
-}
-
-li#taskTargetDone {
-    left: 78%;
+    left: 67.8%;
 }
 
 .story li {
-    width: 22%;
+    width: 29%;
     padding-top: 2px;
     padding-bottom: 5px;
     list-style-type: none;
@@ -261,15 +258,15 @@ li#taskTargetDone {
     height: 100%;
     white-space: pre;
     background-color: #FFFFFF;
-    margin: 0px;
+    margin: 0;
     padding: 1%;
-    border: 0px;
-    border-radius: 0px;
+    border: 0;
+    border-radius: 0;
 }
 
 .item {
     width: 100%;
-    border-radius: 0px;
+    border-radius: 0;
     background-color: #54D0ED;
     margin-top: 3px;
     padding: 5px;
@@ -277,7 +274,7 @@ li#taskTargetDone {
 }
 
 .itemStatus0 {
-    margin-left: 0%;
+    margin-left: 0;
 }
 
 .itemStatus1 {
@@ -288,19 +285,14 @@ li#taskTargetDone {
     margin-left: 240%;
 }
 
-.itemStatus3 {
-    margin-left: 360%;
-}
-
 .item .taskDelete {
     float: right;
-    margin-right: 0px;
+    margin-right: 0;
     margin-top: -4px;
 }
 
 .borderPriority1, .borderPriority2, .borderPriority3, .borderPriority4, .borderPriority5 {
-    border-left-width: 2px;
-    border-left-style: solid;
+    border-left: 2px solid;
 }
 
 .borderPriority1 {
@@ -331,7 +323,7 @@ li#taskTargetDone {
     left: 35%; /* fallback for browsers without support for calc() */
     left: calc(50% - 180px);
     padding: 14px;
-    border-radius: 0px;
+    border-radius: 0;
     background-color: #FFFFFF;
 }
 
@@ -342,7 +334,7 @@ li#taskTargetDone {
 .addStoryContainer input, .addTaskContainer input {
     font-family: 'roboto-light', "Helvetica Neue", Helvetica, Arial, sans-serif;
     border: 1px solid #DFDFDF;
-    border-radius: 0px;
+    border-radius: 0;
     margin-bottom: 12px;
 }
 
@@ -360,7 +352,7 @@ li#taskTargetDone {
 .textSmallField {
     display: block;
     text-align: center;
-    margin: 0px auto;
+    margin: 0 auto;
     width: 40px;
 }
 
@@ -369,7 +361,7 @@ li#taskTargetDone {
 }
 
 .addStoryContainer fieldset {
-    border: 0px;
+    border: 0;
     text-align: center;
 }
 
@@ -381,8 +373,8 @@ li#taskTargetDone {
     position: fixed;
     opacity: 0.8;
     z-index: 11;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     background-color: #000000;
     width : 100%;
     height: 100%;
