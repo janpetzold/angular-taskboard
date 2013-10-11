@@ -36,7 +36,7 @@
                 </ul>
             </div>
 
-            <a class="iconButton buttonDecoration" href="#/story/add" ng-click="newStory.triggerDialog()">
+            <a id="addStoryButton" class="iconButton buttonDecoration" href="#/story/add" ng-click="newStory.triggerDialog()">
                 <pre class="icon iconDark iconPlus" alt="add new story" title="add new story"></pre>
                 <span>add new story</span>
             </a>
@@ -100,13 +100,13 @@
                 <div class="storyContainer" ng-repeat="story in stories | orderBy:orderProp">
                     <a href="#/story/{{story.id}}/collapse" class="{{story.state}}Icon" title="{{story.state}}" ng-click="changeStoryState(story)"></a>
                     <h2>Story <strong>{{story.name}}</strong> ({{story.tasks.length || 0}} tasks, {{getRemainingTime(story)}} remaining days)</h2>
-                    <a class="buttonDecorationSmall {{story.state}}" href="#/story/{{story.id}}/addTask" ng-click="newTask.triggerDialog(story)">
+                    <a class="addTaskButton buttonDecorationSmall {{story.state}}" href="#/story/{{story.id}}/addTask" ng-click="newTask.triggerDialog(story)">
                         <pre class="icon iconDark iconPlus" alt="add new task" title="add new task"></pre></a>
-                    <a class="buttonDecorationSmall {{story.state}}" href="#/story/{{story.id}}/delete" ng-click="deleteStory(story)">
+                    <a class="deleteStoryButton buttonDecorationSmall {{story.state}}" href="#/story/{{story.id}}/delete" ng-click="deleteStory(story)">
                         <pre class="icon iconDark iconDelete" alt="delete this story" title="delete this story"></pre></a>
                     <ul class="story {{story.state}} borderPriority{{story.priority}}">
                         <li class="task" ng-repeat="task in story.tasks | filter:filterProp">
-                            <div id="task{{task.id}}"  class="item itemStatus{{task.status}}" draggable>
+                            <div id="task{{task.id}}" class="item itemStatus{{task.status}}" draggable>
                                 <textarea ng-model="task.title" ng-change="taskUpdated(task)">{{task.title}}</textarea>
 
                                 <br />
@@ -115,7 +115,7 @@
                                 <br />
                                 <span>Remaining time: <strong><input class="inputTaskEstimate" type="text" ng-model="task.estimate" ng-change="taskEstimateUpdated()" /></strong></span>
 
-                                <a class="taskDelete buttonDecorationSmall" href="#/task/{{task.id}}/delete" ng-click="deleteTask(task, $index)">
+                                <a class="deleteTaskButton buttonDecorationSmall" href="#/task/{{task.id}}/delete" ng-click="deleteTask(task, $index)">
                                     <pre class="icon iconDark iconDelete" alt="delete this task" title="delete this task"></pre>
                                 </a>
                             </div>

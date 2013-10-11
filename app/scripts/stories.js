@@ -81,6 +81,7 @@ app.stories.changeStoryState = function(stories, story, storageService) {
         story.state = "collapsed";
     } else if(story.state === "collapsed") {
         story.state = "expanded";
+        // TODO: Add listener for textarea visibility change
     }
     // Update stories in storage
     storageService.setStories(stories);

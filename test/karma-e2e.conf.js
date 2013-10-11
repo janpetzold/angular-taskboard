@@ -3,14 +3,14 @@ module.exports = function (config) {
     basePath: '',
 
     files: [
-      'e2e/**/*.js'
+        'e2e/**/*.js'
     ],
 
     frameworks: ['ng-scenario'],
 
     autoWatch: false,
 
-    browsers : ['C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'],
+    browsers : ['C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'],
 
     singleRun: true,
 
