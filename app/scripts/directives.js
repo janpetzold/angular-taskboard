@@ -33,7 +33,9 @@ app.directive('draggable', function() {
 
         el.addEventListener("dragend", function(e) {
             scope.$apply('handleResetDragState()');
-            scope.$apply('changeTaskState(' + scope.$parent.story.id + ',' + scope.$index + ',' + app.helpers.getStatusFromOffset(e.x) + ')');
+            // Get the current screen dimension
+            var width = parseInt($("body").width(), 10);
+            scope.$apply('changeTaskState(' + scope.$parent.story.id + ',' + scope.$index + ',' + app.helpers.getStatusFromOffset(width, e.x) + ')');
 
             return false;
         }, false);

@@ -1,6 +1,6 @@
 module.exports = function (config) {
   config.set({
-    basePath: '../',
+    basePath: '',
 
     files: [
       'e2e/**/*.js'
@@ -10,7 +10,7 @@ module.exports = function (config) {
 
     autoWatch: false,
 
-    browsers: ['Chrome'],
+    browsers : ['C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'],
 
     singleRun: true,
 
@@ -19,7 +19,7 @@ module.exports = function (config) {
     },
 
     junitReporter: {
-      outputFile: 'test_out/e2e.xml',
+      outputFile: 'results/e2e.xml',
       suite: 'e2e'
     }
   });

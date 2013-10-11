@@ -16,6 +16,10 @@ app.helpers.triggerHidden = function(obj) {
     return obj;
 };
 
+app.helpers.test = function() {
+    return true;
+};
+
 /**
  * Perform a very simple benchmark between the call of start / stop.
  */
@@ -27,7 +31,9 @@ app.helpers.simpleBenchmark = (function() {
             startTime = new Date().getTime();
         },
         stop : function() {
-            console.log("Elapsed time: " + (new Date().getTime() - startTime) + "ms");
+            var elapsedTime = new Date().getTime() - startTime;
+            console.log("Elapsed time: " + elapsedTime + "ms");
+            return elapsedTime;
         }
     };
 })();
@@ -38,10 +44,8 @@ app.helpers.simpleBenchmark = (function() {
  * @param offset The X offset of the current element
  * @returns {number} The status code for the current <code>task</code>
  */
-app.helpers.getStatusFromOffset = function(offset) {
-    // Get the current screen dimension
-    var max = parseInt($("body").width(), 10);
-    var interval = max / 3;
+app.helpers.getStatusFromOffset = function(width, offset) {
+    var interval = width / 3;
 
     if(offset >= interval && offset <= (interval * 2)) {
         return 1;

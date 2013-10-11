@@ -8,4 +8,5 @@ REM - NodeJS (http://nodejs.org/)
 REM - Karma (npm install -g karma)
 
 set BASE_DIR=%~dp0
-karma start "%BASE_DIR%\..\config\karma-e2e.conf.js" %*
+set CHROME_BIN=C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+karma start "%BASE_DIR%\..\..\karma-e2e.conf.js" %*
