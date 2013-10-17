@@ -3,11 +3,11 @@ module.exports = function (config) {
         basePath: '',
 
         files: [
-            '../app/bower_components/angular/angular.js',
-            '../app/bower_components/jquery/jquery.js',
-            '../app/bower_components/underscore/underscore.js',
+            '../app/js/libraries/angular/angular.js',
+            '../app/js/libraries/jquery/jquery.js',
+            '../app/js/libraries/underscore/underscore.js',
             'lib/angular-mocks.js',
-            '../app/scripts/**/*.js',
+            '../app/js/**/*.js',
             'unit/controllerSpec.js',
         ],
 
