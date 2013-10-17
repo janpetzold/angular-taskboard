@@ -13,15 +13,19 @@ module.exports = function (config) {
 
         frameworks: ['jasmine'],
 
-        autoWatch: false,
-
         browsers : ['PhantomJS'],
 
         singleRun: true,
 
-        junitReporter: {
-            outputFile: 'review/unit.xml',
-            suite: 'unit'
+        reporters: ['coverage'],
+
+        coverageReporter : {
+            type : 'text',
+            dir : '../review/coverage'
+        },
+
+        preprocessors: {
+            '../app/js/*.js': ['coverage']
         }
     });
 };

@@ -15,7 +15,7 @@ module.exports = function (config) {
     singleRun: true,
 
     proxies: {
-      '/': 'http://localhost:63343/'
+      '/': 'http://localhost:63342/'
     },
 
     junitReporter: {

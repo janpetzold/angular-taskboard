@@ -1,7 +1,7 @@
 /**
  * All unit tests for the helpers module
  *
- * @auther Jan Petzold
+ * @author Jan Petzold
  */
 describe("Unit tests for helpers module", function() {
         it("check if hidden property of object is reverted correctly", function() {

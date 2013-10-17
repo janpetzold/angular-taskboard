@@ -9,4 +9,5 @@ REM - Karma (npm install -g karma)
 
 set BASE_DIR=%~dp0
 set CHROME_BIN=C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
-karma start "%BASE_DIR%\..\karma-e2e.conf.js" %*
+set PHANTOMJS_BIN=C:\Users\jpetzold\AppData\Roaming\npm\node_modules\phantomjs\lib\phantom\phantomjs.exe
+karma start "%BASE_DIR%\..\karma-unit.conf.js" %*

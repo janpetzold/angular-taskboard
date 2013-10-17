@@ -16,10 +16,6 @@ app.helpers.triggerHidden = function(obj) {
     return obj;
 };
 
-app.helpers.test = function() {
-    return true;
-};
-
 /**
  * Perform a very simple benchmark between the call of start / stop.
  */
