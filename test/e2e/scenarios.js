@@ -8,27 +8,27 @@ describe('End-to-end test for the StoryController', function() {
     });
 
     it('Create a new story with one task', function() {
-        expect(element('.dropzone .storyContainer').count()).toBe(0);
-        expect(element('.addStoryContainer').css('display')).toBe('none');
-        expect(element('.addTaskContainer').css('display')).toBe('none');
+        expect(element('.l-task-dropzone .l-stories').count()).toBe(0);
+        expect(element('.l-dialog-story-popup').css('display')).toBe('none');
+        expect(element('.l-dialog-task-popup').css('display')).toBe('none');
 
         // Click button to open dialog for a new story
-        element('#addStoryButton').click();
+        element('#story-add').click();
 
-        expect(element('.addStoryContainer').css('display')).toBe('block');
+        expect(element('.l-dialog-story-popup').css('display')).toBe('block');
 
         // Simulate data
         input('newStory.name').enter('Go shopping');
         input('newStory.priority').enter(4);
 
         // Submit and reload the browser
-        element('.addStoryContainer a').click();
+        element('.l-dialog-story-popup a').click();
         browser().reload();
 
         // Add task to story
-        element('.addTaskButton:first').click();
+        element('.task-add:first').click();
 
-        expect(element('.addTaskContainer').css('display')).toBe('block');
+        expect(element('.l-dialog-task-popup').css('display')).toBe('block');
 
         // Simulate data
         input('newTask.title').enter('Buy potatoes');
@@ -36,10 +36,10 @@ describe('End-to-end test for the StoryController', function() {
         input('newTask.estimate').enter(4);
 
         // Submit
-        element('.addTaskContainer a').click();
+        element('.l-dialog-task-popup a').click();
 
-        expect(element('.item textarea').count()).toBe(1);
-        expect(element('.item textarea').text()).toBe("Buy potatoes");
-        expect(element('.storyContainer h2').text()).toBe('Story Go shopping (1 tasks, 4 remaining days)');
+        expect(element('.task-item textarea').count()).toBe(1);
+        expect(element('.task-item textarea').text()).toBe("Buy potatoes");
+        expect(element('.l-stories h2').text()).toBe('Story Go shopping (1 tasks, 4 remaining days)');
     });
 });

@@ -11,40 +11,40 @@
         <link rel="stylesheet" href="styles/main.css">
     </head>
     <body>
-        <form name="allStories" ng-controller="StoryController">
-            <div class="headlineContainer">
+        <form ng-controller="StoryController">
+            <div>
                 <h1>the simple taskboard</h1>
 
-                <ul class="modificators">
-                    <li class="sortingContainer buttonDecoration">
-                        <pre class="icon iconDark iconFilter" alt="Order by" title="Order by"></pre>
+                <ul id="l-topmenu">
+                    <li class="order-filter-item button-design-large">
+                        <pre class="l-button-icon icon-set-dark icon-display-filter" alt="Order by" title="Order by"></pre>
                         <select ng-Model="orderProp" alt="Order by" title="Order by">
                             <option value="-time">Age</option>
                             <option value="priority">Priority</option>
                         </select>
                     </li>
 
-                    <li class="filterContainer buttonDecoration">
-                        <pre class="icon iconDark iconPerson" alt="Filter by assignee" title="Filter by assignee"></pre>
+                    <li class="order-filter-item button-design-large">
+                        <pre class="l-button-icon icon-set-dark icon-display-person" alt="Filter by assignee" title="Filter by assignee"></pre>
                         <select ng-Model="filterProp" alt="Filter by assignee" title="Filter by assignee">
                             <option ng-repeat="assignee in assignees" ng-model="assignee.name" value="{{assignee.name}}">{{assignee.name}}</option>
                         </select>
                         <a href="#/resetFilter" ng-click="resetFilter()">
-                            <pre class="icon iconDark iconReset" alt="Reset filter" title="Reset Filter"></pre>
+                            <pre class="l-button-icon icon-set-dark icon-display-cancel" alt="Reset filter" title="Reset Filter"></pre>
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <a id="addStoryButton" class="iconButton buttonDecoration" href="#/story/add" ng-click="newStory.triggerDialog()">
-                <pre class="icon iconDark iconPlus" alt="add new story" title="add new story"></pre>
+            <a id="story-add" class="l-spacer-left8 button-design-large" href="#/story/add" ng-click="newStory.triggerDialog()">
+                <pre class="l-button-icon icon-set-dark icon-display-plus" alt="add new story" title="add new story"></pre>
                 <span>add new story</span>
             </a>
 
-            <div class="addStoryContainer" ng-hide="newStory.hidden">
+            <div class="l-dialog-story-popup" ng-hide="newStory.hidden">
                 <h3>Add a new story</h3>
                 <label for="storyName">Name of the story: </label>
-                <input id="storyName" class="textField" type="text" ng-model="newStory.name" />
+                <input id="storyName" class="story-input-name" type="text" ng-model="newStory.name" />
 
                 <br />
 
@@ -58,32 +58,32 @@
                     <input type="radio" name="priority" value="5" ng-model="newStory.priority">5</input>
                 </fieldset>
 
-                <a class="buttonDecoration addButtonCentered" value="Add" ng-click="newStory.add()">
-                    <pre class="icon iconDark iconOk" alt="add" title="add"></pre>
+                <a class="button-design-large dialog-confirm-button" value="Add" ng-click="newStory.add()">
+                    <pre class="l-button-icon icon-set-dark icon-display-confirm" alt="add" title="add"></pre>
                     <span>Add</span>
                 </a>
             </div>
 
-            <div class="addTaskContainer" ng-hide="newTask.hidden">
+            <div class="l-dialog-task-popup" ng-hide="newTask.hidden">
                 <h3>Add new task for story <strong>{{newTask.story.name}}</strong></h3>
 
                 <label for="taskTitle">Task description:</label>
-                <input id="taskTitle" class="textField" type="text" ng-model="newTask.title" />
+                <input id="taskTitle" class="story-input-name" type="text" ng-model="newTask.title" />
 
                 <label for="taskAssignee">Assignee for this task:</label>
-                <input id="taskAssignee" class="textField" type="text" ng-model="newTask.assignee" />
+                <input id="taskAssignee" class="story-input-name" type="text" ng-model="newTask.assignee" />
 
                 <label for="taskEstimate">Estimated time:</label>
-                <input id="taskEstimate" class="textSmallField" type="text" ng-model="newTask.estimate" />
+                <input id="taskEstimate" class="dialog-input-estimate" type="text" ng-model="newTask.estimate" />
 
-                <a class="buttonDecoration addButtonCentered" value="Add" ng-click="newTask.add(newTask)">
-                    <pre class="icon iconDark iconOk" alt="add" title="add"></pre>
+                <a class="button-design-large dialog-confirm-button" value="Add" ng-click="newTask.add(newTask)">
+                    <pre class="l-button-icon icon-set-dark icon-display-confirm" alt="add" title="add"></pre>
                     <span>Add</span>
                 </a>
             </div>
 
             <!-- Header for story status -->
-            <ul class="storyStatus">
+            <ul id="l-story-status">
                 <li>ToDo ({{tasksUndone}})</li>
                 <li>Progressing ({{tasksProgressing}})</li>
                 <li>Resolved ({{tasksResolved}})</li>
@@ -91,32 +91,32 @@
 
             <!-- Placeholder for potential dragging targets -->
             <ul class="taskTargets">
-                <li id="taskTargetToDo" class="taskTarget" ng-hide="taskTargets.targetToDo.hidden" droppable></li>
-                <li id="taskTargetProgress" class="taskTarget" ng-hide="taskTargets.targetProgress.hidden" droppable></li>
-                <li id="taskTargetResolved" class="taskTarget" ng-hide="taskTargets.targetResolved.hidden" droppable></li>
+                <li id="task-drop-target-todo" class="task-drop-target" ng-hide="taskTargets.targetToDo.hidden" droppable></li>
+                <li id="task-drop-target-progress" class="task-drop-target" ng-hide="taskTargets.targetProgress.hidden" droppable></li>
+                <li id="task-drop-target-resolved" class="task-drop-target" ng-hide="taskTargets.targetResolved.hidden" droppable></li>
            </ul>
 
-            <div class="dropzone" droppable>
-                <div class="storyContainer" ng-repeat="story in stories | orderBy:orderProp">
-                    <a href="#/story/{{story.id}}/collapse" class="{{story.state}}Icon" title="{{story.state}}" ng-click="changeStoryState(story)"></a>
+            <div id="l-task-dropzone" droppable>
+                <div class="l-stories" ng-repeat="story in stories | orderBy:orderProp">
+                    <a href="#/story/{{story.id}}/collapse" class="icon-{{story.state}}" title="{{story.state}}" ng-click="changeStoryState(story)"></a>
                     <h2>Story <strong>{{story.name}}</strong> ({{story.tasks.length || 0}} tasks, {{getRemainingTime(story)}} remaining days)</h2>
-                    <a class="addTaskButton buttonDecorationSmall {{story.state}}" href="#/story/{{story.id}}/addTask" ng-click="newTask.triggerDialog(story)">
-                        <pre class="icon iconDark iconPlus" alt="add new task" title="add new task"></pre></a>
-                    <a class="deleteStoryButton buttonDecorationSmall {{story.state}}" href="#/story/{{story.id}}/delete" ng-click="deleteStory(story)">
-                        <pre class="icon iconDark iconDelete" alt="delete this story" title="delete this story"></pre></a>
-                    <ul class="story {{story.state}} borderPriority{{story.priority}}">
+                    <a class="task-add button-design-small {{story.state}}" href="#/story/{{story.id}}/addTask" ng-click="newTask.triggerDialog(story)">
+                        <pre class="l-button-icon icon-set-dark icon-display-plus" alt="add new task" title="add new task"></pre></a>
+                    <a class="deleteStoryButton button-design-small {{story.state}}" href="#/story/{{story.id}}/delete" ng-click="deleteStory(story)">
+                        <pre class="l-button-icon icon-set-dark icon-display-trash" alt="delete this story" title="delete this story"></pre></a>
+                    <ul class="task-list {{story.state}} borderPriority{{story.priority}}">
                         <li class="task" ng-repeat="task in story.tasks | filter:filterProp">
-                            <div id="task{{task.id}}" class="item itemStatus{{task.status}}" draggable>
+                            <div id="task{{task.id}}" class="task-item task-item-status{{task.status}}" draggable>
                                 <textarea ng-model="task.title" ng-change="taskUpdated(task)">{{task.title}}</textarea>
 
                                 <br />
                                 <span>Assignee: <strong>{{task.assignee}}</strong></span>
 
                                 <br />
-                                <span>Remaining time: <strong><input class="inputTaskEstimate" type="text" ng-model="task.estimate" ng-change="taskEstimateUpdated()" /></strong></span>
+                                <span>Remaining time: <strong><input class="task-input-estimate" type="text" ng-model="task.estimate" ng-change="taskEstimateUpdated()" /></strong></span>
 
-                                <a class="deleteTaskButton buttonDecorationSmall" href="#/task/{{task.id}}/delete" ng-click="deleteTask(task, $index)">
-                                    <pre class="icon iconDark iconDelete" alt="delete this task" title="delete this task"></pre>
+                                <a class="deleteTaskButton button-design-small" href="#/task/{{task.id}}/delete" ng-click="deleteTask(task, $index)">
+                                    <pre class="l-button-icon icon-set-dark icon-display-trash" alt="delete this task" title="delete this task"></pre>
                                 </a>
                             </div>
                         </li>
@@ -124,7 +124,7 @@
                 </div>
             </div>
 
-            <div class="cover" ng-hide="newStory.hidden && newTask.hidden" ng-animate="{show: 'fade-show', hide: 'fade-hide'}"></div>
+            <div id="l-dialog-cover" ng-hide="newStory.hidden && newTask.hidden" ng-animate="{show: 'fade-show', hide: 'fade-hide'}"></div>
 
         </form>
 

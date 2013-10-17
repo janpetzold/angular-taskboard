@@ -19,11 +19,13 @@ app.directive('draggable', function() {
             e.dataTransfer.effectAllowed = "move";
             e.dataTransfer.setData("Text", this.id);
 
+            console.log(el);
+
             // Update height of other taskTargets depending on the current height
-            $(".taskTarget").height($(el).height() + 20);
+            $(".task-drop-target").height($(el).height() + 20);
 
             // Update top position of other taskTargets depending on the current top
-            $(".taskTarget").css("top", $(el).position().top - 2);
+            $(".task-drop-target").css("top", $(el).position().top - 2);
 
             // Show targets depending on state
             scope.$apply('handleDragFromState(' + scope.task.status + ')');
