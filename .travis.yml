@@ -1,6 +1,15 @@
+# Our runtime will be node
 language: node_js
 node_js:
   - 0.10
+
+# Init a web server since we seem to need it for our tests
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+  - rackup  # start a Web server
+  - sleep 3 # give Web server some time to bind to sockets, etc
 
 # blacklist
 branches:
