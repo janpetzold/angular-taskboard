@@ -8,7 +8,7 @@ buildscript {
 }
 
 version = "1.0.0"
-buildDir = "gh-pages"
+buildDir = "../angular-taskboard-gh-pages"
 
 // Invoke the plugin
 apply plugin: 'js'
