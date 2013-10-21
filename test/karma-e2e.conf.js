@@ -10,7 +10,7 @@ module.exports = function (config) {
 
     autoWatch: false,
 
-    browsers : ['C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'],
+    browsers : ['Chrome'],
 
     singleRun: true,
 
