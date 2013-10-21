@@ -2,6 +2,5 @@ node_modules
 review
 gh-pages
 .gradle
-.gitignore
 .tmp
 .idea
