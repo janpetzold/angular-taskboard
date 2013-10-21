@@ -1,7 +1,7 @@
 # Our runtime will be node
 language: node_js
 node_js:
-  - 0.10
+  - 0.8
 
 # Init a web server since we seem to need it for our tests
 before_script:

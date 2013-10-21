@@ -16,7 +16,7 @@
         "istanbul": "~0.1"
     },
     "scripts": {
-        "test": "./node_modules/.bin/karma start test/karma-unit-travis.conf.js --single-run browsers PhantomJS"
+        "test": "./node_modules/.bin/karma start karma-unit-travis.conf.js"
     },
     "engines": {
         "node": ">=0.10.13"
