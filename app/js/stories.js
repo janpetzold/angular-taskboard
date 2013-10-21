@@ -36,6 +36,8 @@ app.stories.createStory = function(stories, sourceStory, storageService, sequenc
     // Update stories in view and storage
     stories = app.stories.addStory(stories, story);
     storageService.setStories(stories);
+
+    return stories;
 };
 
 /**

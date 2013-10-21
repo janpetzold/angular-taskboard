@@ -1,12 +1,11 @@
 {
-    "name": "angular-taskboard",
-    "version": "0.0.0",
-    "dependencies": {
-        "jquery": "~1.10.2",
-        "angular": "~1.0.8",
-        "angular-mocks": "~1.0.8",
-        "angular-scenario": "~1.0.8",
-        "underscore": "~1.5.2"
-    },
-    "devDependencies": {}
+  "name": "angular-taskboard",
+  "version": "0.0.0",
+  "dependencies": {
+    "jquery": "~1.10.2",
+    "angular": "~1.0.8",
+    "angular-mocks": "~1.0.8",
+    "angular-scenario": "~1.0.8"
+  },
+  "devDependencies": {}
 }

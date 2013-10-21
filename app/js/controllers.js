@@ -33,7 +33,7 @@ function StoryController($scope, storageService, sequenceNumberService) {
 
     $scope.newStory.add = function() {
         if($scope.newStory.name && $scope.newStory.name.length > 0) {
-            app.stories.createStory($scope.stories, $scope.newStory, storageService, sequenceNumberService);
+            $scope.stories = app.stories.createStory($scope.stories, $scope.newStory, storageService, sequenceNumberService);
 
             // Hide the input dialog
             $scope.newStory.hidden = true;

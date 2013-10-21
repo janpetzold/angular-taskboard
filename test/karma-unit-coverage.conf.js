@@ -5,7 +5,6 @@ module.exports = function (config) {
         files: [
             '../app/js/libraries/angular/angular.js',
             '../app/js/libraries/jquery/jquery.js',
-            '../app/js/libraries/underscore/underscore.js',
             'lib/angular-mocks.js',
             '../app/js/*.js',
             'unit/*.js'

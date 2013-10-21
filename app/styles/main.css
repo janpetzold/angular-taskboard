@@ -87,6 +87,7 @@ strong {
 }
 
 .l-dialog-story-popup fieldset input {
+    border: 0;
     margin-left: 8px;
 }
 

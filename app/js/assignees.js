@@ -26,7 +26,13 @@ app.assignees.createNewAssignee = function(name) {
  */
 app.assignees.addAssignee = function(assignees, assignee) {
     if(assignees && assignees.length > 0) {
-        if(!_.find(assignees, function(a) { return a.name === assignee.name })) {
+        var assigneeFound = false;
+        for (var i in assignees) {
+            if(assignees[i].name === assignee.name) {
+                assigneeFound = true;
+            }
+        }
+        if(!assigneeFound) {
             assignees.push(assignee);
         }
     } else {
