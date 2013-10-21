@@ -1,0 +1,115 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.eriwen:gradle-js-plugin:1.8.0'
+    }
+}
+
+version = "1.0.0"
+buildDir = "gh-pages"
+
+// Invoke the plugin
+apply plugin: 'js'
+
+javascript.source {
+    prod {
+        js {
+            srcDir "app/js"
+            include "*.js"
+        }
+    }
+}
+
+defaultTasks 'clean', 'copyCss', 'copyImages', 'copyManifest', 'copyMinJsLibraries', 'jsHint', 'jsUnit', 'jsE2e', 'jsCoverage', 'combineJs', 'minifyJs', 'copyAndProcessIndexHtml'
+
+task clean(type: Delete) {
+    delete "${buildDir}"
+}
+
+task copyCss(type:Copy) {
+    from "${projectDir}/app/styles"
+    into "${buildDir}/styles"
+}
+
+task copyImages(type:Copy) {
+    from "${projectDir}/app/images"
+    into "${buildDir}/images"
+}
+
+task copyManifest(type:Copy) {
+    from "${projectDir}/app/"
+    into "${buildDir}"
+    include '*.manifest'
+}
+
+task copyAndProcessIndexHtml(type:Copy) {
+    from "${projectDir}/app"
+    into "${buildDir}"
+    include '*index.html'
+
+    // Replace regular libraries with their minified versions
+    filter{
+        String line -> line.replaceAll(
+            '.js"', '.min.js"')
+    }
+
+    // Remove all <script> lines that are not a library
+    filter{
+        String line -> line.replaceAll(
+            "<script.*src=\"(?!js/libraries).*</script>", "")
+    }
+
+    // Insert the minified script we generated before the closing </body> tag
+    filter{
+        String line -> line.replaceAll(
+            '</body>', '\t\t<script type="text/javascript" src="js/scripts.min.js"></script>\r\n</body>')
+    }
+
+    // Remove all blank lines in HTML
+    def regexp = new org.apache.tools.ant.types.RegularExpression()
+    regexp.pattern = '[^ \n\t\r]+'
+    filter(org.apache.tools.ant.filters.LineContainsRegExp, regexps:[regexp])
+}
+
+task copyMinJsLibraries(type: Copy) {
+    from "${projectDir}/app/js/libraries"
+    into "${buildDir}/js/libraries"
+
+    include '**/*min.js'
+}
+
+combineJs {
+    source = javascript.source.prod.js.files
+    dest = file("${buildDir}/js/scripts.js")
+}
+
+minifyJs {
+    source = combineJs
+    dest = file("${buildDir}/js/scripts.min.js")
+    closure {
+        warningLevel = 'QUIET'
+    }
+}
+
+jshint {
+    tasks.jshint.source = javascript.source.prod.js.files
+    tasks.jshint.dest = file("${projectDir}/review/jshint/jshint.out")
+    tasks.jshint.reporter = 'checkstyle'
+    tasks.jshint.ignoreExitCode=true
+    jshint.options = [bitwise:true]
+    jshint.predef=["Ext":1]
+}
+
+task jsUnit(type: Exec, description: "JS unit tests") {
+    commandLine 'cmd', '/c', 'test\\unit\\unit-test.bat'
+}
+
+task jsE2e(type: Exec, description: "JS end-to-end tests") {
+    commandLine 'cmd', '/c', 'test\\e2e\\e2e-test.bat'
+}
+
+task jsCoverage(type: Exec, description: "JS code coverage") {
+    commandLine 'cmd', '/c', 'test\\unit\\unit-coverage.bat'
+}

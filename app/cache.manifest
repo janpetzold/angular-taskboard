@@ -30,3 +30,4 @@ FALLBACK:
 # All other resources are loaded via network
 NETWORK:
 *
+js/scripts.min.js
