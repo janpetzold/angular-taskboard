@@ -12,6 +12,7 @@ app.tasks = {};
 app.tasks.taskTemplate = {
     "hidden" : true,
     "storyId" : null,
+    "storyName" : '',
     "title" : '',
     "assignee" : '',
     "estimate" : 1,

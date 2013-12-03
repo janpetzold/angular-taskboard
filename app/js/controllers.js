@@ -90,6 +90,7 @@ function StoryController($scope, storageService, sequenceNumberService) {
         // Set the story ID as property of the new task
         if($scope.newTask.hidden === false) {
             $scope.newTask.storyId = story.id;
+            $scope.newTask.storyName = app.stories.getStoryById($scope.stories, story.id).name;
         }
     };
 

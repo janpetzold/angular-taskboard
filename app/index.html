@@ -66,7 +66,7 @@
             </div>
 
             <div class="l-dialog-task-popup" ng-hide="newTask.hidden" ng-cloak>
-                <h3>Add new task for story <strong>{{newTask.story.name}}</strong></h3>
+                <h3>Add new task for story <strong ng-bind="newTask.storyName"></strong></h3>
 
                 <label for="taskTitle">Task description:</label>
                 <input id="taskTitle" class="story-input-name" type="text" ng-model="newTask.title" />
@@ -85,9 +85,10 @@
 
             <!-- Header for story status -->
             <ul id="l-story-status">
-                <li>ToDo ({{tasksUndone}})</li>
-                <li>Progressing ({{tasksProgressing}})</li>
-                <li>Resolved ({{tasksResolved}})</li>
+                <!-- Use ng-bind instead of {{}} to avoid flickering - just needed in first page load (index.html) -->
+                <li>ToDo (<span ng-bind="tasksUndone"></span>)</li>
+                <li>Progressing (<span ng-bind="tasksProgressing"></span>)</li>
+                <li>Resolved (<span ng-bind="tasksResolved"></span>)</li>
             </ul>
 
             <!-- Placeholder for potential dragging targets -->
@@ -111,7 +112,7 @@
                                 <textarea ng-model="task.title" ng-change="taskUpdated(task)">{{task.title}}</textarea>
 
                                 <br />
-                                <span>Assignee: <strong>{{task.assignee}}</strong></span>
+                                <span>Assignee: <strong ng-bind="task.assignee"></strong></span>
 
                                 <br />
                                 <span>Remaining time: <strong><input class="task-input-estimate" type="text" ng-model="task.estimate" ng-change="taskEstimateUpdated()" /></strong></span>

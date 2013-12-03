@@ -34,8 +34,8 @@ describe("Unit tests for controller", function() {
         scope.newStory.name = "Go shopping";
         scope.newStory.add();
 
-        // Refresh stories in scope (TODO: Why is that necessary?)
-        scope.stories = storageService.getStories();
+        // trigger scope changes - necessary in tests, not at runtime
+        scope.$digest();
 
         expect(scope.getRemainingTime(scope.newStory)).toBe(0);
         expect(scope.stories.length).toBe(1);

@@ -1,6 +1,7 @@
 describe('End-to-end test for the StoryController', function() {
+    var scope;
 
-    beforeEach(function() {
+    beforeEach(function($rootScope) {
         browser().navigateTo('/angular-taskboard/app/index.html');
 
         // Reset localStorage to start from scratch
@@ -23,6 +24,8 @@ describe('End-to-end test for the StoryController', function() {
 
         // Submit and reload the browser
         element('.l-dialog-story-popup a').click();
+
+        // TODO: Why is that necessary? Try a rewrite using  Protractor!
         browser().reload();
 
         // Add task to story
