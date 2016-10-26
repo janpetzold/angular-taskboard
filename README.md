@@ -5,7 +5,7 @@ This is a very basic taskboard single page app implemented mainly with AngularJS
 
 You can run it online by accessing [http://janpetzold.github.io/angular-taskboard/](http://janpetzold.github.io/angular-taskboard/).
 
-The client-side dependencies ara managed via [Bower](http://bower.io/). Unit- and End-to-end-tests were implemented in [Jasmine](http://pivotal.github.io/jasmine/) and are executed by [Karma](http://karma-runner.github.io). The unit tests take advantage of [PhantomJS](http://phantomjs.org/), while the end-to-end tests are run in [Chrome](http://phantomjs.org/) but could be executed in any browser.
+The client-side dependencies ara managed via [Bower](http://bower.io/). Unit- and End-to-end-tests were implemented in [Jasmine](https://jasmine.github.io/) and are executed by [Karma](http://karma-runner.github.io). The unit tests take advantage of [PhantomJS](http://phantomjs.org/), while the end-to-end tests are run in [Chrome](http://phantomjs.org/) but could be executed in any browser.
 
 The [Gradle](http://www.gradle.org) build is itself concatenates and minifies the JavaScript and executes all tests. It also creates a [JSHint](http://www.jshint.com/) output file and performs a code-coverage check based on the unit tests via [Istanbul](http://gotwarlost.github.io/istanbul/).
 
